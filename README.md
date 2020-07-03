@@ -59,7 +59,7 @@ First, create a CarouselView in your xml file.
 ```
 Set `scrollDirection` attribution to `horizontal` for creating horizontal carousel and `vertical` for vertical carousel.
 
-In your `onCreate()` method in Activity, create your own custom layouts, add layouts to List<ViewGroup>, and start the carousel.
+In your `onCreate()` method in Activity, create your own custom layouts, add layouts to List<ViewGroup>, and start the carousel. You can add up to 10 layouts in the CarouselView. 
 ```java
 CarouselView carouselView = findViewById(R.id.carousel_view);
 
@@ -88,7 +88,7 @@ First, create a SlideshowView in your xml file.
         custom:showSlideNumber="true" />
 ```
 
-In your `onCreate()` method in Activity, create your own custom layouts, add layouts to List<ViewGroup>, and start the slideshow.
+In your `onCreate()` method in Activity, create your own custom layouts, add layouts to List<ViewGroup>, and start the slideshow. You can add up to 10 layouts in the SlideshowView. 
 
 ```java
 SlideshowView slideshowView = findViewById(R.id.slideshow_view);
@@ -104,5 +104,62 @@ slideshowView.launch();
 Your SlideshowView is now displayed on your app! 👏<br/>
 
 Check out my <a href="https://github.com/sung2063/AndroidSliderViewSample">Android Slide Sample App</a> project for more example on using SliderView library.
+
+## Attributions
+
+Here are available attributions you can use to modify your slider views.
+
+### CarouselView
+
+<center>
+  <table>
+    <tr>
+      <th>Attribution</th>
+      <th>Value</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td rowspan="2">scrollDirection</td>
+      <td>horizontal</td>
+      <td>Display the carousel horizontally. <i>Field value is 0.</i></td>
+    </tr>
+    <tr>
+      <td>vertical</td>
+      <td>Display the carousel vertically. <i>Field value is 1.</i></td>
+    </tr>
+    <tr>
+      <td>showSlideNumber</td>
+      <td>boolean</td>
+      <td>Show the slide number text if the value is true, otherwise do not show.</td>
+    </tr>
+   </table>
+ </center>
+
+### SlideshowView
+
+<center>
+  <table>
+    <tr>
+      <th>Attribution</th>
+      <th>Value</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>showIndicator</td>
+      <td>boolean</td>
+      <td>Show the dot indicator on the slide if the value true, otherwise do not show.</td>
+    </tr>
+    <tr>
+      <td>showSlideNumber</td>
+      <td>boolean</td>
+      <td>Show the slide number text if the value is true, otherwise do not show.</td>
+    </tr>
+    <tr>
+      <td>delayTimePeriod</td>
+      <td>int</td>
+      <td>The slide delay time in second. Default is 5 seconds.</td>
+    </tr>
+   </table>
+ </center>
 
 Happy Sliding! :)
