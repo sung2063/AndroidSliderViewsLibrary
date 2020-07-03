@@ -39,7 +39,7 @@ allprojects {
 
 Next, add the SliderViews and required libraries in <i>app level</i> `build.gradle` and sync the gradle file. 
 ```gradle
-implementation 'com.github.sung2063:AndroidSliderViewsLibrary:1.1'
+implementation 'com.github.sung2063:AndroidSliderViewsLibrary:1.2'
 implementation 'com.google.android.material:material:1.1.0'
 ```
 
