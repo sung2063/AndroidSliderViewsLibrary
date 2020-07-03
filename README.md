@@ -22,7 +22,8 @@ Android Slider Views Library supports user to create <b>horizontal and vertical 
 
 <b>1. Setup your Android project setting</b>
 
-Minimum SDK Version: 21 or greater (Update in your <i>app level</i> `build.gradle`)
+Minimum SDK Version: 21 or greater (Update in your <i>app level</i> `build.gradle`)<br/>
+Supported Programming Language: Java
 <br/><br/>
 <b>2. Add required library</b>
 
