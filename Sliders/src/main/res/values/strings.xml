@@ -1,0 +1,8 @@
+<resources>
+
+    <!-- Error Messages -->
+    <string name="slide_delay_time_illegal_error">Slide delay time must be within 0 and 10.</string>
+    <string name="list_null_error">You must set the list first.</string>
+    <string name="exceed_slide_boundary_error">Slides must be less than 10.</string>
+
+</resources>

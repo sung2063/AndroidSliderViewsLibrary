@@ -1,0 +1,3 @@
+include ':Sliders'
+include ':app'
+rootProject.name = "AndroidSliderViewLibrary"
