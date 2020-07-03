@@ -41,8 +41,8 @@ Next, add the SliderViews library in <i>app level</i> `build.gradle` and sync th
 implementation 'com.github.sung2063:AndroidSliderViewsLibrary:1.1'
 ```
 
-Now you are ready to use SliderView Library. You can start creating CarouselView and SlideshowView.
-<br/><br/>
+Now you are ready to use SliderView Library. You can start creating CarouselView and SlideshowView.<br/>
+
 ### CarouselView
 
 CarouselView can be used for your application intro and show multiple images or videos in one layout with scrolling. CarouselView by Sliders library supports both horizontal and vertical scrolls.
@@ -58,16 +58,20 @@ First, create a CarouselView in your xml file.
 ```
 Set `scrollDirection` attribution to `horizontal` for creating horizontal carousel and `vertical` for vertical carousel.
 
-Next, in your onCreate() method in Activity, create your own custom layouts, create List, and start the carousel.
+In your `onCreate()` method in Activity, create your own custom layouts, add layouts to List<ViewGroup>, and start the carousel.
 ```java
 CarouselView carouselView = findViewById(R.id.carousel_view);
 
-// Create your own layout and add layouts to List<ViewGroup>...
+// Create your own layouts...
+// Create List<ViewGroup> object...
+// Add your layouts to list object...
 
-carouselView.setSlideList(verticalCarouselLayouts);
+carouselView.setSlideList(layoutList);
 carouselView.launch();
 ```
-<br/><br/>
+
+Your CarouselView is now displayed on your app! 👏<br/>
+
 ### SlideshowView
 
 SlideshowView can be used to show the multiple layouts by certain period of time. You can set how much time you want to show each layout to the user.
@@ -83,14 +87,21 @@ First, create a SlideshowView in your xml file.
         custom:showSlideNumber="true" />
 ```
 
-In your onCreate() method in Activity, create the custom layouts and start the slideshow.
+In your `onCreate()` method in Activity, create your own custom layouts, add layouts to List<ViewGroup>, and start the slideshow.
 
 ```java
 SlideshowView slideshowView = findViewById(R.id.slideshow_view);
 
-// Create your own layout and add layouts to List<ViewGroup>...
+// Create your own layouts...
+// Create List<ViewGroup> object...
+// Add your layouts to list object...
 
-slideshowView.setSlideList(slideshowLayouts);
+slideshowView.setSlideList(layoutList);
 slideshowView.launch();
 ```
 
+Your SlideshowView is now displayed on your app! 👏<br/>
+
+Check out my <a href="https://github.com/sung2063/AndroidSliderViewSample">Android Slide Sample App</a> project for more example on using SliderView library.
+
+Happy Sliding! :)
