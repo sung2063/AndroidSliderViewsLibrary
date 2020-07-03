@@ -89,7 +89,6 @@ public class CarouselView extends LinearLayout {
         // Setup Layout
         setupLayoutDirection(carouselHandler.getScrollDirection());
         setupSlideNumber(carouselHandler.isShowingSlideNumber());
-        addView(rootLayout);        // Add layout to the root layout
 
     }
 
@@ -119,6 +118,9 @@ public class CarouselView extends LinearLayout {
      */
     private void setupLayoutDirection(int layoutDirection) {
 
+        if (rootLayout != null)
+            removeView(rootLayout);         // Remove layout first
+
         LayoutInflater inflater = LayoutInflater.from(context);
         if (layoutDirection == CarouselHandler.CAROUSEL_HORIZONTAL_DIRECTION) {
             // Scroll horizontally
@@ -135,6 +137,7 @@ public class CarouselView extends LinearLayout {
             tvPageNum = (TextView) rootLayout.findViewById(R.id.tv_slide_num);
             pbLayoutLoader = (ProgressBar) rootLayout.findViewById(R.id.pb_layout_loader);
         }
+        addView(rootLayout);        // Add layout to the root layout
 
     }
 
