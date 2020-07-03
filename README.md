@@ -1,6 +1,6 @@
 # Android Slider Views Library
 
-Android Slider Views Library supports user to create <b>horizontal and vertical CarouselViews</b> and <b>SlideshowView</b> on Android application.
+Android Slider Views Library supports users to create <b>horizontal and vertical CarouselViews</b> and <b>SlideshowView</b> on Android application.
 
 
 ## Sample GIF Images
