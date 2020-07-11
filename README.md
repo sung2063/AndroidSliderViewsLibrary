@@ -164,4 +164,6 @@ Here are available attributions you can use to modify your slider views.
    </table>
  </center>
 
-Happy Sliding! :)
+ ## Contributor 🌟
+ 
+ Sung Hyun Back (@sung2063)
