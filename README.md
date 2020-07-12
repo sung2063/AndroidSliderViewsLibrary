@@ -167,3 +167,7 @@ Here are available attributions you can use to modify your slider views.
  ## Contributor 🌟
  
  Sung Hyun Back (@sung2063)
+
+ ## Sponsorship
+ 
+ Please sponsor me to my GitHub for contributing more innovative projects and libraries. ❤️
