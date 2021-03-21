@@ -130,6 +130,11 @@ Here are available attributions you can use to modify your slider views.
       <td>Display the carousel vertically. <i>Field value is 1.</i></td>
     </tr>
     <tr>
+      <td>showIndicator</td>
+      <td>boolean</td>
+      <td>Show the dot indicator on the slide if the value true, otherwise do not show.</td>
+    </tr>
+    <tr>
       <td>showSlideNumber</td>
       <td>boolean</td>
       <td>Show the slide number text if the value is true, otherwise do not show.</td>
