@@ -23,6 +23,7 @@ public class CarouselHandler {
     private Context context;
     private List<ViewGroup> slideList;
     private int scrollDirection;
+    private boolean isShowingIndicator;
     private boolean isShowingSlideNumber;
 
     // =============================================================================================
@@ -45,9 +46,10 @@ public class CarouselHandler {
         // Default Constructor
     }
 
-    public CarouselHandler(Context context, int scrollDirection, boolean isShowingSlideNumber) {
+    public CarouselHandler(Context context, int scrollDirection, boolean isShowingIndicator, boolean isShowingSlideNumber) {
         this.context = context;
         this.scrollDirection = scrollDirection;
+        this.isShowingIndicator = isShowingIndicator;
         this.isShowingSlideNumber = isShowingSlideNumber;
     }
 
@@ -69,8 +71,9 @@ public class CarouselHandler {
      * @throws SlideOutOfBoundException on list size is greater than 10
      */
     public void setSlideList(List<ViewGroup> slideList) throws SlideOutOfBoundException {
-        if (slideList.size() > 10)
+        if (slideList.size() > 10) {
             throw new SlideOutOfBoundException(context.getString(R.string.exceed_slide_boundary_error));
+        }
         this.slideList = slideList;
     }
 
@@ -88,6 +91,22 @@ public class CarouselHandler {
      */
     public void setScrollDirection(int scrollDirection) {
         this.scrollDirection = scrollDirection;
+    }
+
+    /**
+     * Returns the value of showing tab indicator
+     * @return true if showing the tab indicator, otherwise false
+     */
+    protected boolean isShowingIndicator() {
+        return isShowingIndicator;
+    }
+
+    /**
+     * Set the value of tab indicator
+     * @param isShowingIndicator boolean value for showing the tab indicator
+     */
+    protected void showIndicator(boolean isShowingIndicator) {
+        this.isShowingIndicator = isShowingIndicator;
     }
 
     /**

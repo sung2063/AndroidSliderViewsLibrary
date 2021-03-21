@@ -2,6 +2,7 @@
 <resources>
 
     <!-- Commonly Used -->
+    <attr name="showIndicator" format="boolean" />
     <attr name="showSlideNumber" format="boolean"/>
 
     <!-- XML attributes for Carousel View -->
@@ -12,6 +13,7 @@
             <enum name="vertical" value="1" />
         </attr>
 
+        <attr name="showIndicator" />
         <attr name="showSlideNumber" />
         
     </declare-styleable>
@@ -19,7 +21,7 @@
     <!-- XML attributes for Slideshow View -->
     <declare-styleable name="SlideshowView">
 
-        <attr name="showIndicator" format="boolean"/>
+        <attr name="showIndicator" />
         <attr name="showSlideNumber" />
         <attr name="delayTimePeriod" format="integer" />
 

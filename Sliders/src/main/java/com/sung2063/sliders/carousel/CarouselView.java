@@ -65,8 +65,9 @@ public class CarouselView extends LinearLayout {
         TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.CarouselView, 0, 0);
         try {
             int scrollDirection = typedArray.getInt(R.styleable.CarouselView_scrollDirection, CarouselHandler.CAROUSEL_HORIZONTAL_DIRECTION);
+            boolean isShowingIndicator = typedArray.getBoolean(R.styleable.CarouselView_showIndicator, false);
             boolean isShowingSlideNumber = typedArray.getBoolean(R.styleable.CarouselView_showSlideNumber, false);
-            carouselHandler = new CarouselHandler(context, scrollDirection, isShowingSlideNumber);
+            carouselHandler = new CarouselHandler(context, scrollDirection, isShowingIndicator, isShowingSlideNumber);
         } finally {
             typedArray.recycle();
             init();
@@ -88,6 +89,7 @@ public class CarouselView extends LinearLayout {
 
         // Setup Layout
         setupLayoutDirection(carouselHandler.getScrollDirection());
+        setupIndicator(carouselHandler.isShowingIndicator());
         setupSlideNumber(carouselHandler.isShowingSlideNumber());
 
     }
@@ -118,8 +120,9 @@ public class CarouselView extends LinearLayout {
      */
     private void setupLayoutDirection(int layoutDirection) {
 
-        if (rootLayout != null)
+        if (rootLayout != null) {
             removeView(rootLayout);         // Remove layout first
+        }
 
         LayoutInflater inflater = LayoutInflater.from(context);
         if (layoutDirection == CarouselHandler.CAROUSEL_HORIZONTAL_DIRECTION) {
@@ -142,6 +145,18 @@ public class CarouselView extends LinearLayout {
     }
 
     /**
+     * Setup the tab indicator
+     * @param isShowingIndicator boolean value for showing the tab indicator
+     */
+    private void setupIndicator(boolean isShowingIndicator) {
+        if (isShowingIndicator) {
+            tabIndicator.setVisibility(VISIBLE);            // Show the indicator
+        } else {
+            tabIndicator.setVisibility(GONE);               // Does not use the indicator
+        }
+    }
+
+    /**
      * Setup the slide number view
      * @param isShowingSlideNumber boolean value for showing the slide number
      */
@@ -161,8 +176,7 @@ public class CarouselView extends LinearLayout {
             });
 
         } else {
-            // Does not use the slide number
-            tvPageNum.setVisibility(GONE);
+            tvPageNum.setVisibility(GONE);      // Does not use the slide number
         }
 
     }
@@ -228,6 +242,23 @@ public class CarouselView extends LinearLayout {
     public void setScrollDirection(int scrollDirection) {
         setupLayoutDirection(scrollDirection);
         carouselHandler.setScrollDirection(scrollDirection);
+    }
+
+    /**
+     * Returns the value of showing tab indicator
+     * @return true if showing the tab indicator, otherwise false
+     */
+    public boolean isShowingIndicator() {
+        return carouselHandler.isShowingIndicator();
+    }
+
+    /**
+     * Set the value of tab indicator
+     * @param isShowingIndicator boolean value for showing the tab indicator
+     */
+    public void showIndicator(boolean isShowingIndicator) {
+        setupIndicator(isShowingIndicator);
+        carouselHandler.showIndicator(isShowingIndicator);
     }
 
     /**

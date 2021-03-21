@@ -65,8 +65,9 @@ public class SlideshowView extends LinearLayout {
             int delayTimePeriod = typedArray.getInt(R.styleable.SlideshowView_delayTimePeriod, 5);
 
             // Check illegal exception
-            if ((delayTimePeriod < 0) || (delayTimePeriod > 10))
+            if (delayTimePeriod < 0 || delayTimePeriod > 10) {
                 throw new IllegalArgumentException(context.getString(R.string.slide_delay_time_illegal_error));
+            }
 
             slideshowHandler = new SlideshowHandler(context, isShowingIndicator, isShowingSlideNumber, delayTimePeriod);
 
@@ -114,12 +115,11 @@ public class SlideshowView extends LinearLayout {
      * @param isShowingIndicator boolean value for showing the tab indicator
      */
     private void setupIndicator(boolean isShowingIndicator) {
-
-        if (isShowingIndicator)
+        if (isShowingIndicator) {
             tabIndicator.setVisibility(VISIBLE);            // Show the indicator
-        else
+        } else {
             tabIndicator.setVisibility(GONE);               // Does not use the indicator
-
+        }
     }
 
     /**
@@ -140,8 +140,9 @@ public class SlideshowView extends LinearLayout {
                     tvPageNum.setText(position + " / " + slideshowHandler.getSlideList().size());
                 }
             });
-        } else
+        } else {
             tvPageNum.setVisibility(GONE);              // Does not use the slide number
+        }
 
     }
 
@@ -162,14 +163,16 @@ public class SlideshowView extends LinearLayout {
                 public void run() {
 
                     int slideIndex;
-                    if (vpSlider.getCurrentItem() < slideshowHandler.getSlideList().size() - 1)
+                    if (vpSlider.getCurrentItem() < slideshowHandler.getSlideList().size() - 1) {
                         slideIndex = vpSlider.getCurrentItem() + 1;
-                    else
+                    } else {
                         slideIndex = 0;
+                    }
                     vpSlider.setCurrentItem(slideIndex);
 
-                    if (slideshowHandler.showSlideNumber())
+                    if (slideshowHandler.showSlideNumber()) {
                         setPageNumber(slideIndex + 1);            // Update only when slide is enabled
+                    }
 
                 }
             });
@@ -187,18 +190,21 @@ public class SlideshowView extends LinearLayout {
             SlideAdapter slideAdapter = new SlideAdapter(slideList);
             vpSlider.setAdapter(slideAdapter);
 
-            if (slideshowHandler.isShowingIndicator())
+            if (slideshowHandler.isShowingIndicator()) {
                 tabIndicator.setupWithViewPager(vpSlider, true);        // Setup indicator only when it is on
+            }
 
-            if (slideshowHandler.showSlideNumber())
+            if (slideshowHandler.showSlideNumber()) {
                 setPageNumber(1);       // Update only when slide is enabled
+            }
 
             long periodTime = slideshowHandler.getDelayTimePeriod() * 1000;
             Timer sliderTimer = new Timer();
             sliderTimer.scheduleAtFixedRate(new SlideshowTimer(), 4000, periodTime);
 
-        } else
+        } else {
             throw new SlideNullPointerException(context.getString(R.string.list_null_error));      // Null Exception
+        }
 
     }
 

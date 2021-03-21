@@ -94,8 +94,9 @@ public class SlideshowHandler {
      * @exception IllegalArgumentException on delay time is set less than 0 or greater than 10
      */
     protected void setDelayTimePeriod(int delayTimePeriod) throws IllegalArgumentException {
-        if ((delayTimePeriod < 0) || (delayTimePeriod > 10))
+        if (delayTimePeriod < 0 || delayTimePeriod > 10) {
             throw new IllegalArgumentException(context.getString(R.string.slide_delay_time_illegal_error));
+        }
         this.delayTimePeriod = delayTimePeriod;
     }
 
