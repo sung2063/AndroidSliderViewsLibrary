@@ -24,7 +24,9 @@ public class SlideshowHandler {
     private Context context;
     private List<ViewGroup> slideList;
     private boolean isShowingIndicator;
+    private float indicatorScale;
     private boolean isShowingSlideNumber;
+    private int slideNumberTextSize;        // in px
     private int delayTimePeriod;
 
     // =============================================================================================
@@ -34,10 +36,12 @@ public class SlideshowHandler {
         // Default Constructor
     }
 
-    public SlideshowHandler(Context context, boolean isShowingIndicator, boolean isShowingSlideNumber, int delayTimePeriod) {
+    public SlideshowHandler(Context context, boolean isShowingIndicator, float indicatorScale, boolean isShowingSlideNumber, int slideNumberTextSize, int delayTimePeriod) {
         this.context = context;
         this.isShowingIndicator = isShowingIndicator;
+        this.indicatorScale = indicatorScale;
         this.isShowingSlideNumber = isShowingSlideNumber;
+        this.slideNumberTextSize = slideNumberTextSize;
         this.delayTimePeriod = delayTimePeriod;
     }
 
@@ -59,8 +63,9 @@ public class SlideshowHandler {
      * @throws SlideOutOfBoundException on list size is greater than 10
      */
     protected void setSlideList(List<ViewGroup> slideList) throws SlideOutOfBoundException {
-        if (slideList.size() > 10)
+        if (slideList.size() > 10) {
             throw new SlideOutOfBoundException(context.getString(R.string.exceed_slide_boundary_error));
+        }
         this.slideList = slideList;
     }
 
@@ -78,6 +83,22 @@ public class SlideshowHandler {
      */
     protected void showIndicator(boolean isShowingIndicator) {
         this.isShowingIndicator = isShowingIndicator;
+    }
+
+    /**
+     * Returns the value of indicator scale
+     * @return indicatorScale returns the indicator scale value
+     */
+    protected float getIndicatorScale() {
+        return indicatorScale;
+    }
+
+    /**
+     * Set the value of indicator scale
+     * @param indicatorScale float value for indicator scale
+     */
+    protected void setIndicatorScale(float indicatorScale) {
+        this.indicatorScale = indicatorScale;
     }
 
     /**
@@ -114,5 +135,21 @@ public class SlideshowHandler {
      */
     protected void setShowingSlideNumber(boolean isShowingSlideNumber) {
         this.isShowingSlideNumber = isShowingSlideNumber;
+    }
+
+    /**
+     * Get the value of slide number text size in px
+     * @return slide number text size in px
+     */
+    public int getSlideNumberTextSize() {
+        return slideNumberTextSize;
+    }
+
+    /**
+     * Set the value of slide number text size in px
+     * @param slideNumberTextSize int value for slide number text size in px
+     */
+    public void setSlideNumberTextSize(int slideNumberTextSize) {
+        this.slideNumberTextSize = slideNumberTextSize;
     }
 }

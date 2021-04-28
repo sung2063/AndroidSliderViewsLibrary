@@ -24,7 +24,9 @@ public class CarouselHandler {
     private List<ViewGroup> slideList;
     private int scrollDirection;
     private boolean isShowingIndicator;
+    private float indicatorScale;
     private boolean isShowingSlideNumber;
+    private int slideNumberTextSize;            // in px
 
     // =============================================================================================
     // Fields
@@ -46,11 +48,13 @@ public class CarouselHandler {
         // Default Constructor
     }
 
-    public CarouselHandler(Context context, int scrollDirection, boolean isShowingIndicator, boolean isShowingSlideNumber) {
+    public CarouselHandler(Context context, int scrollDirection, boolean isShowingIndicator, float indicatorScale, boolean isShowingSlideNumber, int slideNumberTextSize) {
         this.context = context;
         this.scrollDirection = scrollDirection;
         this.isShowingIndicator = isShowingIndicator;
+        this.indicatorScale = indicatorScale;
         this.isShowingSlideNumber = isShowingSlideNumber;
+        this.slideNumberTextSize = slideNumberTextSize;
     }
 
     // =============================================================================================
@@ -110,6 +114,22 @@ public class CarouselHandler {
     }
 
     /**
+     * Returns the value of indicator scale
+     * @return indicatorScale returns indicator scale value
+     */
+    protected float getIndicatorScale() {
+        return indicatorScale;
+    }
+
+    /**
+     * Set the value of indicator scale
+     * @param indicatorScale float value for indicator scale
+     */
+    protected void setIndicatorScale(float indicatorScale) {
+        this.indicatorScale = indicatorScale;
+    }
+
+    /**
      * Returns the value of showing slide number
      * @return true if showing the slide number, otherwise false
      */
@@ -123,6 +143,22 @@ public class CarouselHandler {
      */
     public void showSlideNumber(boolean isShowingSlideNumber) {
         this.isShowingSlideNumber = isShowingSlideNumber;
+    }
+
+    /**
+     * Get the value of slide number text size in px
+     * @return slide number text size in px
+     */
+    public int getSlideNumberTextSize() {
+        return slideNumberTextSize;
+    }
+
+    /**
+     * Set the value of slide number text size in px
+     * @param slideNumberTextSize int value for slide number text size in px
+     */
+    public void setSlideNumberTextSize(int slideNumberTextSize) {
+        this.slideNumberTextSize = slideNumberTextSize;
     }
 
 }

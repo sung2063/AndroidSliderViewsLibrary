@@ -17,8 +17,10 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.sung2063.sliders.R;
 import com.sung2063.sliders.adapter.SlideAdapter;
+import com.sung2063.sliders.exceptions.IllegalArgumentException;
 import com.sung2063.sliders.exceptions.SlideNullPointerException;
 import com.sung2063.sliders.exceptions.SlideOutOfBoundException;
+import com.sung2063.sliders.util.UnitConverter;
 
 import java.util.List;
 
@@ -57,7 +59,7 @@ public class CarouselView extends LinearLayout {
     }
 
     // Create object from XML file
-    public CarouselView(Context context, @Nullable AttributeSet attrs) {
+    public CarouselView(Context context, @Nullable AttributeSet attrs) throws IllegalArgumentException {
         super(context, attrs);
 
         this.context = context;
@@ -66,8 +68,21 @@ public class CarouselView extends LinearLayout {
         try {
             int scrollDirection = typedArray.getInt(R.styleable.CarouselView_scrollDirection, CarouselHandler.CAROUSEL_HORIZONTAL_DIRECTION);
             boolean isShowingIndicator = typedArray.getBoolean(R.styleable.CarouselView_showIndicator, false);
+            float indicatorScale = typedArray.getFloat(R.styleable.CarouselView_indicatorScale, 1);
             boolean isShowingSlideNumber = typedArray.getBoolean(R.styleable.CarouselView_showSlideNumber, false);
-            carouselHandler = new CarouselHandler(context, scrollDirection, isShowingIndicator, isShowingSlideNumber);
+            int slideNumberTextSize = typedArray.getInt(R.styleable.CarouselView_slideNumberTextSize, 45);
+
+            // Check illegal exception
+            if (indicatorScale < 0 || indicatorScale > 1.5) {
+                throw new IllegalArgumentException(context.getString(R.string.indicator_scale_illegal_error));
+            }
+
+            if (slideNumberTextSize < 0 || slideNumberTextSize > 50) {
+                throw new IllegalArgumentException(context.getString(R.string.slide_number_text_size_illegal_error));
+            }
+
+            carouselHandler = new CarouselHandler(context, scrollDirection, isShowingIndicator, indicatorScale, isShowingSlideNumber, slideNumberTextSize);
+
         } finally {
             typedArray.recycle();
             init();
@@ -89,8 +104,8 @@ public class CarouselView extends LinearLayout {
 
         // Setup Layout
         setupLayoutDirection(carouselHandler.getScrollDirection());
-        setupIndicator(carouselHandler.isShowingIndicator());
-        setupSlideNumber(carouselHandler.isShowingSlideNumber());
+        setupIndicator(carouselHandler.isShowingIndicator(), carouselHandler.getIndicatorScale());
+        setupSlideNumber(carouselHandler.isShowingSlideNumber(), carouselHandler.getSlideNumberTextSize());
 
     }
 
@@ -147,10 +162,14 @@ public class CarouselView extends LinearLayout {
     /**
      * Setup the tab indicator
      * @param isShowingIndicator boolean value for showing the tab indicator
+     * @param indicatorScale float value for indicator scale
      */
-    private void setupIndicator(boolean isShowingIndicator) {
+    private void setupIndicator(boolean isShowingIndicator, float indicatorScale) {
         if (isShowingIndicator) {
             tabIndicator.setVisibility(VISIBLE);            // Show the indicator
+            tabIndicator.setScaleX(indicatorScale);
+            tabIndicator.setScaleY(indicatorScale);
+
         } else {
             tabIndicator.setVisibility(GONE);               // Does not use the indicator
         }
@@ -159,14 +178,19 @@ public class CarouselView extends LinearLayout {
     /**
      * Setup the slide number view
      * @param isShowingSlideNumber boolean value for showing the slide number
+     * @param slideNumberTextSize text size of slide number
      */
-    private void setupSlideNumber(boolean isShowingSlideNumber) {
+    private void setupSlideNumber(boolean isShowingSlideNumber, int slideNumberTextSize) {
 
         if (isShowingSlideNumber) {
             // Show the slide number
             tvPageNum.setVisibility(VISIBLE);
-            vpSlider.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
 
+            // Convert text size in sp
+            float slideNumberTextSizeInDP = UnitConverter.convertTextPXToSP(context, slideNumberTextSize);
+            tvPageNum.setTextSize(slideNumberTextSizeInDP);
+
+            vpSlider.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
                 @Override
                 public void onPageSelected(int index) {
                     super.onPageSelected(index);
@@ -182,7 +206,7 @@ public class CarouselView extends LinearLayout {
     }
 
     // =============================================================================================
-    // Accessable Methods
+    // Accessible Methods
     // =============================================================================================
     public void launch() throws SlideNullPointerException {
 
@@ -197,16 +221,14 @@ public class CarouselView extends LinearLayout {
 
             // Give sometime for loading
             Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    repositioningVerticalTab();
-                    pbLayoutLoader.setVisibility(GONE);
-                }
+            handler.postDelayed(() -> {
+                repositioningVerticalTab();
+                pbLayoutLoader.setVisibility(GONE);
             }, 250);
 
-        } else
+        } else {
             throw new SlideNullPointerException(context.getString(R.string.list_null_error));      // Null Exception
+        }
 
     }
 
@@ -257,7 +279,7 @@ public class CarouselView extends LinearLayout {
      * @param isShowingIndicator boolean value for showing the tab indicator
      */
     public void showIndicator(boolean isShowingIndicator) {
-        setupIndicator(isShowingIndicator);
+        setupIndicator(isShowingIndicator, carouselHandler.getIndicatorScale());
         carouselHandler.showIndicator(isShowingIndicator);
     }
 
@@ -270,12 +292,30 @@ public class CarouselView extends LinearLayout {
     }
 
     /**
+     * Set indicator scale
+     * @param indicatorScale float value for indicator scale
+     */
+    public void setIndicatorScale(float indicatorScale) {
+        setupIndicator(carouselHandler.isShowingIndicator(), indicatorScale);
+        carouselHandler.setIndicatorScale(indicatorScale);
+    }
+
+    /**
      * Set the value of slide number
      * @param isShowingSlideNumber boolean value for showing the slide number
      */
     public void showSlideNumber(boolean isShowingSlideNumber) {
-        setupSlideNumber(isShowingSlideNumber);
+        setupSlideNumber(isShowingSlideNumber, carouselHandler.getSlideNumberTextSize());
         carouselHandler.showSlideNumber(isShowingSlideNumber);
+    }
+
+    /**
+     * Set the slide number text size
+     * @param slideNumberTextSize int value for slide number text size in px
+     */
+    public void setSlideNumberTextSize(int slideNumberTextSize) {
+        setupSlideNumber(carouselHandler.isShowingSlideNumber(), slideNumberTextSize);
+        carouselHandler.setSlideNumberTextSize(slideNumberTextSize);
     }
 
 }

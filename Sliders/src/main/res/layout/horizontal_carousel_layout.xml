@@ -44,7 +44,7 @@
             android:paddingRight="20dp"
             android:paddingBottom="10dp"
             android:textColor="@android:color/white"
-            android:textSize="16sp"
+            tools:textSize="16sp"
             tools:text="1 / 5" />
 
     </RelativeLayout>

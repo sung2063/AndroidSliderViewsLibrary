@@ -3,7 +3,9 @@
 
     <!-- Commonly Used -->
     <attr name="showIndicator" format="boolean" />
+    <attr name="indicatorScale" format="float" />
     <attr name="showSlideNumber" format="boolean"/>
+    <attr name="slideNumberTextSize" format="integer" />
 
     <!-- XML attributes for Carousel View -->
     <declare-styleable name="CarouselView">
@@ -14,7 +16,9 @@
         </attr>
 
         <attr name="showIndicator" />
+        <attr name="indicatorScale" />
         <attr name="showSlideNumber" />
+        <attr name="slideNumberTextSize" />
         
     </declare-styleable>
 
@@ -22,7 +26,9 @@
     <declare-styleable name="SlideshowView">
 
         <attr name="showIndicator" />
+        <attr name="indicatorScale" />
         <attr name="showSlideNumber" />
+        <attr name="slideNumberTextSize" />
         <attr name="delayTimePeriod" format="integer" />
 
     </declare-styleable>

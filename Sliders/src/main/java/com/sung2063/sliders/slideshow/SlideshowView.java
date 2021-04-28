@@ -19,6 +19,7 @@ import com.sung2063.sliders.adapter.SlideAdapter;
 import com.sung2063.sliders.exceptions.IllegalArgumentException;
 import com.sung2063.sliders.exceptions.SlideNullPointerException;
 import com.sung2063.sliders.exceptions.SlideOutOfBoundException;
+import com.sung2063.sliders.util.UnitConverter;
 
 import java.util.List;
 import java.util.Timer;
@@ -61,15 +62,25 @@ public class SlideshowView extends LinearLayout {
         TypedArray typedArray = context.getTheme().obtainStyledAttributes(attrs, R.styleable.SlideshowView, 0, 0);
         try {
             boolean isShowingIndicator = typedArray.getBoolean(R.styleable.SlideshowView_showIndicator, false);
+            float indicatorScale = typedArray.getFloat(R.styleable.SlideshowView_indicatorScale, 1);
             boolean isShowingSlideNumber = typedArray.getBoolean(R.styleable.SlideshowView_showSlideNumber, false);
+            int slideNumberTextSize = typedArray.getInt(R.styleable.SlideshowView_slideNumberTextSize, 45);
             int delayTimePeriod = typedArray.getInt(R.styleable.SlideshowView_delayTimePeriod, 5);
 
             // Check illegal exception
+            if (indicatorScale < 0 || indicatorScale > 1.5) {
+                throw new IllegalArgumentException(context.getString(R.string.indicator_scale_illegal_error));
+            }
+
+            if (slideNumberTextSize < 0 || slideNumberTextSize > 50) {
+                throw new IllegalArgumentException(context.getString(R.string.slide_number_text_size_illegal_error));
+            }
+
             if (delayTimePeriod < 0 || delayTimePeriod > 10) {
                 throw new IllegalArgumentException(context.getString(R.string.slide_delay_time_illegal_error));
             }
 
-            slideshowHandler = new SlideshowHandler(context, isShowingIndicator, isShowingSlideNumber, delayTimePeriod);
+            slideshowHandler = new SlideshowHandler(context, isShowingIndicator, indicatorScale, isShowingSlideNumber, slideNumberTextSize, delayTimePeriod);
 
         } finally {
             typedArray.recycle();
@@ -97,8 +108,8 @@ public class SlideshowView extends LinearLayout {
         tabIndicator = (TabLayout) rootLayout.findViewById(R.id.slide_indicator);
         tvPageNum = (TextView) rootLayout.findViewById(R.id.tv_slide_num);
 
-        setupIndicator(slideshowHandler.isShowingIndicator());
-        setupSlideNumber(slideshowHandler.showSlideNumber());
+        setupIndicator(slideshowHandler.isShowingIndicator(), slideshowHandler.getIndicatorScale());
+        setupSlideNumber(slideshowHandler.showSlideNumber(), slideshowHandler.getSlideNumberTextSize());
         addView(rootLayout);        // Add layout to the root layout
 
     }
@@ -113,10 +124,13 @@ public class SlideshowView extends LinearLayout {
     /**
      * Setup the tab indicator
      * @param isShowingIndicator boolean value for showing the tab indicator
+     * @param indicatorScale float value for indicator scale
      */
-    private void setupIndicator(boolean isShowingIndicator) {
+    private void setupIndicator(boolean isShowingIndicator, float indicatorScale) {
         if (isShowingIndicator) {
             tabIndicator.setVisibility(VISIBLE);            // Show the indicator
+            tabIndicator.setScaleX(indicatorScale);
+            tabIndicator.setScaleY(indicatorScale);
         } else {
             tabIndicator.setVisibility(GONE);               // Does not use the indicator
         }
@@ -125,14 +139,19 @@ public class SlideshowView extends LinearLayout {
     /**
      * Setup the slide number view
      * @param isShowingSlideNumber boolean value for showing the slide number
+     * @param slideNumberTextSize text size of slide number
      */
-    protected void setupSlideNumber(boolean isShowingSlideNumber) {
+    protected void setupSlideNumber(boolean isShowingSlideNumber, int slideNumberTextSize) {
 
         if (isShowingSlideNumber) {
             // Show the slide number
             tvPageNum.setVisibility(VISIBLE);
-            vpSlider.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
 
+            // Convert text size in sp
+            float slideNumberTextSizeInDP = UnitConverter.convertTextPXToSP(context, slideNumberTextSize);
+            tvPageNum.setTextSize(slideNumberTextSizeInDP);
+
+            vpSlider.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
                 @Override
                 public void onPageSelected(int index) {
                     super.onPageSelected(index);
@@ -158,22 +177,17 @@ public class SlideshowView extends LinearLayout {
         @Override
         public void run() {
 
-            ((Activity) context).runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
+            ((Activity) context).runOnUiThread(() -> {
+                int slideIndex;
+                if (vpSlider.getCurrentItem() < slideshowHandler.getSlideList().size() - 1) {
+                    slideIndex = vpSlider.getCurrentItem() + 1;
+                } else {
+                    slideIndex = 0;
+                }
+                vpSlider.setCurrentItem(slideIndex);
 
-                    int slideIndex;
-                    if (vpSlider.getCurrentItem() < slideshowHandler.getSlideList().size() - 1) {
-                        slideIndex = vpSlider.getCurrentItem() + 1;
-                    } else {
-                        slideIndex = 0;
-                    }
-                    vpSlider.setCurrentItem(slideIndex);
-
-                    if (slideshowHandler.showSlideNumber()) {
-                        setPageNumber(slideIndex + 1);            // Update only when slide is enabled
-                    }
-
+                if (slideshowHandler.showSlideNumber()) {
+                    setPageNumber(slideIndex + 1);            // Update only when slide is enabled
                 }
             });
         }
@@ -238,8 +252,17 @@ public class SlideshowView extends LinearLayout {
      * @param isShowingIndicator boolean value for showing the tab indicator
      */
     public void showIndicator(boolean isShowingIndicator) {
-        setupIndicator(isShowingIndicator);
+        setupIndicator(isShowingIndicator, slideshowHandler.getIndicatorScale());
         slideshowHandler.showIndicator(isShowingIndicator);
+    }
+
+    /**
+     * Set indicator scale
+     * @param indicatorScale float value for indicator scale
+     */
+    public void setIndicatorScale(int indicatorScale) {
+        setupIndicator(slideshowHandler.isShowingIndicator(), indicatorScale);
+        slideshowHandler.setIndicatorScale(indicatorScale);
     }
 
     /**
@@ -272,8 +295,17 @@ public class SlideshowView extends LinearLayout {
      * @param isShowingSlideNumber boolean value for showing the slide number
      */
     public void showSlideNumber(boolean isShowingSlideNumber) {
-        setupSlideNumber(isShowingSlideNumber);
+        setupSlideNumber(isShowingSlideNumber, slideshowHandler.getSlideNumberTextSize());
         slideshowHandler.setShowingSlideNumber(isShowingSlideNumber);
+    }
+
+    /**
+     * Set the slide number text size
+     * @param slideNumberTextSize int value for slide number text size
+     */
+    public void setSlideNumberTextSize(int slideNumberTextSize) {
+        setupSlideNumber(slideshowHandler.showSlideNumber(), slideNumberTextSize);
+        slideshowHandler.setSlideNumberTextSize(slideNumberTextSize);
     }
 
 }
