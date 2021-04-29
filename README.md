@@ -67,9 +67,9 @@ First, create a CarouselView in your xml file.
         android:id="@+id/carousel_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        custom:scrollDirection="horizontal"
-        custom:showSlideNumber="true"
-        custom:slideNumberTextSize="40" />
+        app:scrollDirection="horizontal"
+        app:showSlideNumber="true"
+        app:slideNumberTextSize="40" />
 ```
 Set `scrollDirection` attribution to `horizontal` for creating horizontal carousel and `vertical` for vertical carousel.
 
@@ -97,11 +97,11 @@ First, create a SlideshowView in your xml file.
         android:id="@+id/slideshow_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        custom:showIndicator="true"
-        custom:indicatorScale="1"
-        custom:delayTimePeriod="5"
-        custom:showSlideNumber="true"
-        custom:slideNumberTextSize="40" />
+        app:showIndicator="true"
+        app:indicatorScale="1"
+        app:delayTimePeriod="5"
+        app:showSlideNumber="true"
+        app:slideNumberTextSize="40" />
 ```
 
 In your `onCreate()` method in Activity, create your own custom layouts, add layouts to List<ViewGroup>, and start the slideshow. You can add up to 10 layouts in the SlideshowView. 
