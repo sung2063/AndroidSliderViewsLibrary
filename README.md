@@ -233,3 +233,7 @@ Here are available attributions you can use to modify your slider views.
  
  Please sponsor me to my GitHub sponsorship page at https://github.com/sponsors/sung2063.
  Your valueable sponsorship helps me contributing more innovative projects and libraries. ❤️
+ 
+ ## License 📝
+ 
+ The code is licensed under the <a href="https://github.com/sung2063/AndroidSliderViewsLibrary/blob/master/LICENSE">GNU General Public License</a>.
