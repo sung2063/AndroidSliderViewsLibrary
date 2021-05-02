@@ -4,6 +4,8 @@
     <!-- Commonly Used -->
     <attr name="showIndicator" format="boolean" />
     <attr name="indicatorScale" format="float" />
+    <attr name="indicatorSelectedIcon" format="integer" />
+    <attr name="indicatorUnselectedIcon" format="integer" />
     <attr name="showSlideNumber" format="boolean"/>
     <attr name="slideNumberTextSize" format="integer" />
 
@@ -17,6 +19,8 @@
 
         <attr name="showIndicator" />
         <attr name="indicatorScale" />
+        <attr name="indicatorSelectedIcon" />
+        <attr name="indicatorUnselectedIcon" />
         <attr name="showSlideNumber" />
         <attr name="slideNumberTextSize" />
         
@@ -27,6 +31,8 @@
 
         <attr name="showIndicator" />
         <attr name="indicatorScale" />
+        <attr name="indicatorSelectedIcon" />
+        <attr name="indicatorUnselectedIcon" />
         <attr name="showSlideNumber" />
         <attr name="slideNumberTextSize" />
         <attr name="delayTimePeriod" format="integer" />

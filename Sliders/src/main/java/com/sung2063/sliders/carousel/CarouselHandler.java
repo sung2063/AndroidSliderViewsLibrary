@@ -1,6 +1,7 @@
 package com.sung2063.sliders.carousel;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.ViewGroup;
 
 import com.sung2063.sliders.R;
@@ -25,6 +26,8 @@ public class CarouselHandler {
     private int scrollDirection;
     private boolean isShowingIndicator;
     private float indicatorScale;
+    private Drawable indicatorSelectedIcon;
+    private Drawable indicatorUnselectedIcon;
     private boolean isShowingSlideNumber;
     private int slideNumberTextSize;            // in px
 
@@ -48,11 +51,13 @@ public class CarouselHandler {
         // Default Constructor
     }
 
-    public CarouselHandler(Context context, int scrollDirection, boolean isShowingIndicator, float indicatorScale, boolean isShowingSlideNumber, int slideNumberTextSize) {
+    public CarouselHandler(Context context, int scrollDirection, boolean isShowingIndicator, float indicatorScale, Drawable indicatorSelectedIcon, Drawable indicatorUnselectedIcon, boolean isShowingSlideNumber, int slideNumberTextSize) {
         this.context = context;
         this.scrollDirection = scrollDirection;
         this.isShowingIndicator = isShowingIndicator;
         this.indicatorScale = indicatorScale;
+        this.indicatorSelectedIcon = indicatorSelectedIcon;
+        this.indicatorUnselectedIcon = indicatorUnselectedIcon;
         this.isShowingSlideNumber = isShowingSlideNumber;
         this.slideNumberTextSize = slideNumberTextSize;
     }
@@ -127,6 +132,38 @@ public class CarouselHandler {
      */
     protected void setIndicatorScale(float indicatorScale) {
         this.indicatorScale = indicatorScale;
+    }
+
+    /**
+     * Returns the drawable id of indicator selected icon
+     * @return indicatorSelectedIcon returns indicator selected icon drawable id
+     */
+    protected Drawable getIndicatorSelectedIcon() {
+        return indicatorSelectedIcon;
+    }
+
+    /**
+     * Set the drawable id of indicator selected icon
+     * @param indicatorSelectedIcon drawable id of indicator selected icon
+     */
+    protected void setIndicatorSelectedIcon(Drawable indicatorSelectedIcon) {
+        this.indicatorSelectedIcon = indicatorSelectedIcon;
+    }
+
+    /**
+     * Returns the drawable id of indicator unselected icon
+     * @return indicatorUnselectedIcon returns indicator unselected icon drawable id
+     */
+    protected Drawable getIndicatorUnselectedIcon() {
+        return indicatorUnselectedIcon;
+    }
+
+    /**
+     * Set the drawable id of indicator unselected icon
+     * @param indicatorUnselectedIcon drawable id of indicator unselected icon
+     */
+    protected void setIndicatorUnselectedIcon(Drawable indicatorUnselectedIcon) {
+        this.indicatorUnselectedIcon = indicatorUnselectedIcon;
     }
 
     /**

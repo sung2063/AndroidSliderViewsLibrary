@@ -2,6 +2,7 @@ package com.sung2063.sliders.carousel;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -69,8 +70,19 @@ public class CarouselView extends LinearLayout {
             int scrollDirection = typedArray.getInt(R.styleable.CarouselView_scrollDirection, CarouselHandler.CAROUSEL_HORIZONTAL_DIRECTION);
             boolean isShowingIndicator = typedArray.getBoolean(R.styleable.CarouselView_showIndicator, false);
             float indicatorScale = typedArray.getFloat(R.styleable.CarouselView_indicatorScale, 1);
+            Drawable indicatorSelectedIcon = typedArray.getDrawable(R.styleable.CarouselView_indicatorSelectedIcon);
+            Drawable indicatorUnselectedIcon = typedArray.getDrawable(R.styleable.CarouselView_indicatorUnselectedIcon);
             boolean isShowingSlideNumber = typedArray.getBoolean(R.styleable.CarouselView_showSlideNumber, false);
             int slideNumberTextSize = typedArray.getInt(R.styleable.CarouselView_slideNumberTextSize, 45);
+
+            // Default value check
+            if (indicatorSelectedIcon == null) {
+                indicatorSelectedIcon = context.getDrawable(R.drawable.circle_indicator_selected);
+            }
+
+            if (indicatorUnselectedIcon == null) {
+                indicatorUnselectedIcon = context.getDrawable(R.drawable.circle_indicator_default);
+            }
 
             // Check illegal exception
             if (indicatorScale < 0 || indicatorScale > 1.5) {
@@ -81,7 +93,7 @@ public class CarouselView extends LinearLayout {
                 throw new IllegalArgumentException(context.getString(R.string.slide_number_text_size_illegal_error));
             }
 
-            carouselHandler = new CarouselHandler(context, scrollDirection, isShowingIndicator, indicatorScale, isShowingSlideNumber, slideNumberTextSize);
+            carouselHandler = new CarouselHandler(context, scrollDirection, isShowingIndicator, indicatorScale, indicatorSelectedIcon, indicatorUnselectedIcon, isShowingSlideNumber, slideNumberTextSize);
 
         } finally {
             typedArray.recycle();
@@ -169,6 +181,27 @@ public class CarouselView extends LinearLayout {
             tabIndicator.setVisibility(VISIBLE);            // Show the indicator
             tabIndicator.setScaleX(indicatorScale);
             tabIndicator.setScaleY(indicatorScale);
+
+            // Setup Tab Indicator Listener
+            tabIndicator.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    for (int i = 0; i < tabIndicator.getTabCount(); i++) {
+                        tabIndicator.getTabAt(i).setIcon(carouselHandler.getIndicatorUnselectedIcon());
+                    }
+                    tabIndicator.getTabAt(tab.getPosition()).setIcon(carouselHandler.getIndicatorSelectedIcon());
+                }
+
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+
+                }
+            });
 
         } else {
             tabIndicator.setVisibility(GONE);               // Does not use the indicator

@@ -1,6 +1,7 @@
 package com.sung2063.sliders.slideshow;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.ViewGroup;
 
 import com.sung2063.sliders.R;
@@ -12,9 +13,9 @@ import java.util.List;
 /**
  * The SlideshowHandler class helps stores the data of SlideshowView.
  *
- * @author  Sung Hyun Back
+ * @author Sung Hyun Back
  * @version 1.0
- * @since   2020-07-02
+ * @since 2020-07-02
  */
 public class SlideshowHandler {
 
@@ -25,6 +26,8 @@ public class SlideshowHandler {
     private List<ViewGroup> slideList;
     private boolean isShowingIndicator;
     private float indicatorScale;
+    private Drawable indicatorSelectedIcon;
+    private Drawable indicatorUnselectedIcon;
     private boolean isShowingSlideNumber;
     private int slideNumberTextSize;        // in px
     private int delayTimePeriod;
@@ -36,10 +39,12 @@ public class SlideshowHandler {
         // Default Constructor
     }
 
-    public SlideshowHandler(Context context, boolean isShowingIndicator, float indicatorScale, boolean isShowingSlideNumber, int slideNumberTextSize, int delayTimePeriod) {
+    public SlideshowHandler(Context context, boolean isShowingIndicator, float indicatorScale, Drawable indicatorSelectedIcon, Drawable indicatorUnselectedIcon, boolean isShowingSlideNumber, int slideNumberTextSize, int delayTimePeriod) {
         this.context = context;
         this.isShowingIndicator = isShowingIndicator;
         this.indicatorScale = indicatorScale;
+        this.indicatorSelectedIcon = indicatorSelectedIcon;
+        this.indicatorUnselectedIcon = indicatorUnselectedIcon;
         this.isShowingSlideNumber = isShowingSlideNumber;
         this.slideNumberTextSize = slideNumberTextSize;
         this.delayTimePeriod = delayTimePeriod;
@@ -51,6 +56,7 @@ public class SlideshowHandler {
 
     /**
      * Returns the list of ViewGroup slide
+     *
      * @return the list of ViewGroup
      */
     protected List<ViewGroup> getSlideList() {
@@ -59,6 +65,7 @@ public class SlideshowHandler {
 
     /**
      * Set slide list
+     *
      * @param slideList List of ViewGroup slide which user created
      * @throws SlideOutOfBoundException on list size is greater than 10
      */
@@ -71,6 +78,7 @@ public class SlideshowHandler {
 
     /**
      * Returns the value of showing tab indicator
+     *
      * @return true if showing the tab indicator, otherwise false
      */
     protected boolean isShowingIndicator() {
@@ -79,6 +87,7 @@ public class SlideshowHandler {
 
     /**
      * Set the value of tab indicator
+     *
      * @param isShowingIndicator boolean value for showing the tab indicator
      */
     protected void showIndicator(boolean isShowingIndicator) {
@@ -87,6 +96,7 @@ public class SlideshowHandler {
 
     /**
      * Returns the value of indicator scale
+     *
      * @return indicatorScale returns the indicator scale value
      */
     protected float getIndicatorScale() {
@@ -95,6 +105,7 @@ public class SlideshowHandler {
 
     /**
      * Set the value of indicator scale
+     *
      * @param indicatorScale float value for indicator scale
      */
     protected void setIndicatorScale(float indicatorScale) {
@@ -102,7 +113,44 @@ public class SlideshowHandler {
     }
 
     /**
+     * Returns the drawable id of indicator selected icon
+     *
+     * @return indicatorSelectedIcon returns indicator selected icon drawable id
+     */
+    protected Drawable getIndicatorSelectedIcon() {
+        return indicatorSelectedIcon;
+    }
+
+    /**
+     * Set the drawable id of indicator selected icon
+     *
+     * @param indicatorSelectedIcon drawable id of indicator selected icon
+     */
+    protected void setIndicatorSelectedIcon(Drawable indicatorSelectedIcon) {
+        this.indicatorSelectedIcon = indicatorSelectedIcon;
+    }
+
+    /**
+     * Returns the drawable id of indicator unselected icon
+     *
+     * @return indicatorUnselectedIcon returns indicator unselected icon drawable id
+     */
+    protected Drawable getIndicatorUnselectedIcon() {
+        return indicatorUnselectedIcon;
+    }
+
+    /**
+     * Set the drawable id of indicator unselected icon
+     *
+     * @param indicatorUnselectedIcon drawable id of indicator unselected icon
+     */
+    protected void setIndicatorUnselectedIcon(Drawable indicatorUnselectedIcon) {
+        this.indicatorUnselectedIcon = indicatorUnselectedIcon;
+    }
+
+    /**
      * Returns the value of slide delay time period
+     *
      * @return slide delay time in second
      */
     protected long getDelayTimePeriod() {
@@ -111,8 +159,9 @@ public class SlideshowHandler {
 
     /**
      * Set the value of slide delay time period
+     *
      * @param delayTimePeriod slide delay time in second
-     * @exception IllegalArgumentException on delay time is set less than 0 or greater than 10
+     * @throws IllegalArgumentException on delay time is set less than 0 or greater than 10
      */
     protected void setDelayTimePeriod(int delayTimePeriod) throws IllegalArgumentException {
         if (delayTimePeriod < 0 || delayTimePeriod > 10) {
@@ -123,6 +172,7 @@ public class SlideshowHandler {
 
     /**
      * Returns the value of showing slide number
+     *
      * @return true if showing the slide number, otherwise false
      */
     protected boolean showSlideNumber() {
@@ -131,6 +181,7 @@ public class SlideshowHandler {
 
     /**
      * Set the value of slide number
+     *
      * @param isShowingSlideNumber boolean value for showing the slide number
      */
     protected void setShowingSlideNumber(boolean isShowingSlideNumber) {
@@ -139,6 +190,7 @@ public class SlideshowHandler {
 
     /**
      * Get the value of slide number text size in px
+     *
      * @return slide number text size in px
      */
     public int getSlideNumberTextSize() {
@@ -147,6 +199,7 @@ public class SlideshowHandler {
 
     /**
      * Set the value of slide number text size in px
+     *
      * @param slideNumberTextSize int value for slide number text size in px
      */
     public void setSlideNumberTextSize(int slideNumberTextSize) {

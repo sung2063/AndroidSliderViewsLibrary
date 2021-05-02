@@ -3,6 +3,7 @@ package com.sung2063.sliders.slideshow;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -63,9 +64,20 @@ public class SlideshowView extends LinearLayout {
         try {
             boolean isShowingIndicator = typedArray.getBoolean(R.styleable.SlideshowView_showIndicator, false);
             float indicatorScale = typedArray.getFloat(R.styleable.SlideshowView_indicatorScale, 1);
+            Drawable indicatorSelectedIcon = typedArray.getDrawable(R.styleable.CarouselView_indicatorSelectedIcon);
+            Drawable indicatorUnselectedIcon = typedArray.getDrawable(R.styleable.CarouselView_indicatorUnselectedIcon);
             boolean isShowingSlideNumber = typedArray.getBoolean(R.styleable.SlideshowView_showSlideNumber, false);
             int slideNumberTextSize = typedArray.getInt(R.styleable.SlideshowView_slideNumberTextSize, 45);
             int delayTimePeriod = typedArray.getInt(R.styleable.SlideshowView_delayTimePeriod, 5);
+
+            // Default value check
+            if (indicatorSelectedIcon == null) {
+                indicatorSelectedIcon = context.getDrawable(R.drawable.circle_indicator_selected);
+            }
+
+            if (indicatorUnselectedIcon == null) {
+                indicatorUnselectedIcon = context.getDrawable(R.drawable.circle_indicator_default);
+            }
 
             // Check illegal exception
             if (indicatorScale < 0 || indicatorScale > 1.5) {
@@ -80,7 +92,7 @@ public class SlideshowView extends LinearLayout {
                 throw new IllegalArgumentException(context.getString(R.string.slide_delay_time_illegal_error));
             }
 
-            slideshowHandler = new SlideshowHandler(context, isShowingIndicator, indicatorScale, isShowingSlideNumber, slideNumberTextSize, delayTimePeriod);
+            slideshowHandler = new SlideshowHandler(context, isShowingIndicator, indicatorScale, indicatorSelectedIcon, indicatorUnselectedIcon, isShowingSlideNumber, slideNumberTextSize, delayTimePeriod);
 
         } finally {
             typedArray.recycle();
@@ -131,6 +143,28 @@ public class SlideshowView extends LinearLayout {
             tabIndicator.setVisibility(VISIBLE);            // Show the indicator
             tabIndicator.setScaleX(indicatorScale);
             tabIndicator.setScaleY(indicatorScale);
+
+            // Setup Tab Indicator Listener
+            tabIndicator.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    for (int i = 0; i < tabIndicator.getTabCount(); i++) {
+                        tabIndicator.getTabAt(i).setIcon(slideshowHandler.getIndicatorUnselectedIcon());
+                    }
+                    tabIndicator.getTabAt(tab.getPosition()).setIcon(slideshowHandler.getIndicatorSelectedIcon());
+                }
+
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+
+                }
+            });
+
         } else {
             tabIndicator.setVisibility(GONE);               // Does not use the indicator
         }

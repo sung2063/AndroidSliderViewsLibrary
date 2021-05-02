@@ -10,17 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/slide_indicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:rotation="90"
-        app:tabBackground="@drawable/circle_tab_selector"
-        app:tabGravity="center"
-        app:tabIndicatorHeight="0dp" />
-
     <ProgressBar
         android:id="@+id/pb_layout_loader"
         android:layout_width="wrap_content"
@@ -47,6 +36,19 @@
             android:textColor="@android:color/white"
             tools:textSize="16sp"
             tools:text="1 / 5" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/slide_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:rotation="90"
+            app:tabBackground="@drawable/circle_tab_selector"
+            app:tabGravity="center"
+            app:tabPaddingStart="3dp"
+            app:tabPaddingEnd="3dp"
+            app:tabIndicatorHeight="0dp" />
 
     </RelativeLayout>
 
