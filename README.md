@@ -11,10 +11,12 @@ Android Slider Views Library supports users to create <b>horizontal and vertical
     <tr style="border-collapse: collapse;">
       <td><img src="gifs/horizontal_carousel.gif" width="250" /></td>
       <td><img src="gifs/vertical_carousel.gif" width="250" /></td>
+      <td><img src="gifs/horizontal_carousel%20%232.gif" width="250" /></td>
     </tr>
     <tr>
       <td>Horizontal Carousel</td>
       <td>Vertical Carousel</td>
+      <td>Horizontal Carousel w/ Custom Indicator</td>
     </tr>
    </table>
  </center>
@@ -51,7 +53,7 @@ allprojects {
 
 Next, add the SliderViews and required libraries in <i>app level</i> `build.gradle` and sync the gradle file. 
 ```gradle
-implementation 'com.github.sung2063:AndroidSliderViewsLibrary:1.4'
+implementation 'com.github.sung2063:AndroidSliderViewsLibrary:1.5'
 implementation 'com.google.android.material:material:1.1.0'
 ```
 
@@ -154,6 +156,16 @@ Here are available attributions you can use to modify your slider views.
       <td>Used for resize the indicator scale from 0 - 1.5.</td>
     </tr>
     <tr>
+      <td>indicatorSelectedIcon</td>
+      <td>integer</td>
+      <td>Selected indicator icon drawable id.</td>
+    </tr>
+    <tr>
+      <td>indicatorUnselectedIcon</td>
+      <td>integer</td>
+      <td>Unselected indicator icon drawable id.</td>
+    </tr>
+    <tr>
       <td>showSlideNumber</td>
       <td>boolean</td>
       <td>Show the slide number text if the value is true, otherwise do not show.</td>
@@ -184,6 +196,16 @@ Here are available attributions you can use to modify your slider views.
       <td>indicatorScale</td>
       <td>float</td>
       <td>Used for resize the indicator scale from 0 - 1.5.</td>
+    </tr>
+    <tr>
+      <td>indicatorSelectedIcon</td>
+      <td>integer</td>
+      <td>Selected indicator icon drawable id.</td>
+    </tr>
+    <tr>
+      <td>indicatorUnselectedIcon</td>
+      <td>integer</td>
+      <td>Unselected indicator icon drawable id.</td>
     </tr>
     <tr>
       <td>showSlideNumber</td>
