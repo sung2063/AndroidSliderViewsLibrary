@@ -44,23 +44,23 @@ public class VerticalViewPager extends ViewPager {
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        final boolean toIntercept = super.onInterceptTouchEvent(flipXY(ev));
+        final boolean TO_INTERCEPT = super.onInterceptTouchEvent(flipXY(ev));
         flipXY(ev);
-        return toIntercept;
+        return TO_INTERCEPT;
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-        final boolean toHandle = super.onTouchEvent(flipXY(ev));
+        final boolean TO_HANDLE = super.onTouchEvent(flipXY(ev));
         flipXY(ev);
-        return toHandle;
+        return TO_HANDLE;
     }
 
     private MotionEvent flipXY(MotionEvent ev) {
-        final float width = getWidth();
-        final float height = getHeight();
-        final float x = (ev.getY() / height) * width;
-        final float y = (ev.getX() / width) * height;
+        final float WIDTH = getWidth();
+        final float HEIGHT = getHeight();
+        final float x = (ev.getY() / HEIGHT) * WIDTH;
+        final float y = (ev.getX() / WIDTH) * HEIGHT;
         ev.setLocation(x, y);
         return ev;
     }
@@ -68,14 +68,12 @@ public class VerticalViewPager extends ViewPager {
     private static final class VerticalPageTransformer implements ViewPager.PageTransformer {
         @Override
         public void transformPage(View view, float position) {
-            final int pageWidth = view.getWidth();
-            final int pageHeight = view.getHeight();
-            if (position < -1) {
-                view.setAlpha(0);
-            } else if (position <= 1) {
+            if (position >= -1 && position <= 1) {
+                final int PAGE_WIDTH = view.getWidth();
+                final int PAGE_HEIGHT = view.getHeight();
                 view.setAlpha(1);
-                view.setTranslationX(pageWidth * -position);
-                float yPosition = position * pageHeight;
+                view.setTranslationX(PAGE_WIDTH * -position);
+                float yPosition = position * PAGE_HEIGHT;
                 view.setTranslationY(yPosition);
             } else {
                 view.setAlpha(0);

@@ -11,24 +11,20 @@
 
     <!-- XML attributes for Carousel View -->
     <declare-styleable name="CarouselView">
-        
         <attr name="scrollDirection" format="enum">
             <enum name="horizontal" value="0" />
             <enum name="vertical" value="1" />
         </attr>
-
         <attr name="showIndicator" />
         <attr name="indicatorScale" />
         <attr name="indicatorSelectedIcon" />
         <attr name="indicatorUnselectedIcon" />
         <attr name="showSlideNumber" />
         <attr name="slideNumberTextSize" />
-        
     </declare-styleable>
 
     <!-- XML attributes for Slideshow View -->
     <declare-styleable name="SlideshowView">
-
         <attr name="showIndicator" />
         <attr name="indicatorScale" />
         <attr name="indicatorSelectedIcon" />
@@ -36,8 +32,6 @@
         <attr name="showSlideNumber" />
         <attr name="slideNumberTextSize" />
         <attr name="delayTimePeriod" format="integer" />
-
     </declare-styleable>
-
 
 </resources>
