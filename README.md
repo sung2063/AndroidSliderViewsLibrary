@@ -4,7 +4,7 @@ Android Slider Views Library supports users to create <b>horizontal and vertical
 
 [![](https://jitpack.io/v/sung2063/AndroidSliderViewsLibrary.svg)](https://jitpack.io/#sung2063/AndroidSliderViewsLibrary)
 
-## 📷 Sample GIF Images
+## 🎬 Sample GIF Images
 
 <center>
   <table>
@@ -38,7 +38,6 @@ android {
 }
 ```
 
-<br/>
 <b>2. Add required library</b>
 
 First, include following jitpack url inside maven block in your <i>project level</i> `build.gradle`.
