@@ -4,24 +4,24 @@ Android Slider Views Library supports users to create <b>horizontal and vertical
 
 [![](https://jitpack.io/v/sung2063/AndroidSliderViewsLibrary.svg)](https://jitpack.io/#sung2063/AndroidSliderViewsLibrary)
 
-## Sample GIF Images
+## 📷 Sample GIF Images
 
 <center>
   <table>
     <tr style="border-collapse: collapse;">
       <td><img src="gifs/horizontal_carousel.gif" width="250" /></td>
+      <td><img src="gifs/horizontal_carousel%232.gif" width="250" /></td>
       <td><img src="gifs/vertical_carousel.gif" width="250" /></td>
-      <td><img src="gifs/horizontal_carousel%20%232.gif" width="250" /></td>
     </tr>
     <tr>
       <td>Horizontal Carousel</td>
+      <td>Carousel w/ Custom Indicator</td>
       <td>Vertical Carousel</td>
-      <td>Horizontal Carousel w/ Custom Indicator</td>
     </tr>
    </table>
  </center>
  
-## How To Use Slider Views
+## 📖 How To Use Slider Views
 
 <b>1. Setup your Android project setting</b>
 
@@ -38,7 +38,7 @@ android {
 }
 ```
 
-<br/><br/>
+<br/>
 <b>2. Add required library</b>
 
 First, include following jitpack url inside maven block in your <i>project level</i> `build.gradle`.
@@ -123,7 +123,7 @@ Your SlideshowView is now displayed on your app! 👏<br/>
 
 Check out my <a href="https://github.com/sung2063/AndroidSliderViewSample">Android Slide Sample App</a> project for more example on using SliderView library.
 
-## Attributions
+## 🎨 Attributions
 
 Here are available attributions you can use to modify your slider views.
 
@@ -225,15 +225,15 @@ Here are available attributions you can use to modify your slider views.
    </table>
  </center>
 
- ## Contributor 🌟
+ ## 🌟 Contributor
  
  Sung Hyun Back (@sung2063)
 
- ## Sponsorship
+ ## 💖 Sponsorship
  
  Please sponsor me to my GitHub sponsorship page at https://github.com/sponsors/sung2063.
  Your valueable sponsorship helps me contributing more innovative projects and libraries. ❤️
  
- ## License 📝
+ ## 📝 License
  
  The code is licensed under the <a href="https://github.com/sung2063/AndroidSliderViewsLibrary/blob/master/LICENSE">GNU General Public License</a>.
