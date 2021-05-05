@@ -1,6 +1,8 @@
 # Android Slider Views Library
 
-Android Slider Views Library supports users to create <b>horizontal and vertical CarouselViews</b> and <b>SlideshowView</b> on Android application.
+<img src="banner/AndroidSliderViews%20Banner.jpg" width="100%" />
+
+Android Slider Views library supports <b>Carousels</b> and <b>Slideshow</b> Views which developers simply creating a dynamic gallery on the Android application.
 
 [![](https://jitpack.io/v/sung2063/AndroidSliderViewsLibrary.svg)](https://jitpack.io/#sung2063/AndroidSliderViewsLibrary)
 
