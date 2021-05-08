@@ -1,6 +1,6 @@
 # Android Slider Views Library
 
-<img src="banner/AndroidSliderViews%20Banner.jpg" width="100%" />
+<img src="banner/AndroidSliderViews%20Banner%202.jpg" width="100%" />
 
 Android Slider Views library supports <b>Carousels</b> and <b>Slideshow</b> Views which developers simply creating a dynamic gallery on the Android application.
 
