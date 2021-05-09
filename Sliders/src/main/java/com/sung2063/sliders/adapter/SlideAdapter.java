@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 
+import com.sung2063.sliders.model.DescriptiveSlideModel;
+
 import java.util.List;
 
 /**
@@ -21,12 +23,17 @@ public class SlideAdapter extends PagerAdapter {
     // Variables
     // =============================================================================================
     private List<ViewGroup> slideList;
+    private List<DescriptiveSlideModel> descriptiveSlideList;
 
     // =============================================================================================
     // Constructors
     // =============================================================================================
-    public SlideAdapter(List<ViewGroup> slideList) {
-        this.slideList = slideList;
+    public SlideAdapter(List<ViewGroup> slideList, List<DescriptiveSlideModel> descriptiveSlideList) {
+        if (slideList != null) {
+            this.slideList = slideList;
+        } else {
+            this.descriptiveSlideList = descriptiveSlideList;
+        }
     }
 
     // =============================================================================================
@@ -34,18 +41,27 @@ public class SlideAdapter extends PagerAdapter {
     // =============================================================================================
     @Override
     public int getCount() {
-        return slideList.size();
+        if (slideList != null) {
+            return slideList.size();
+        } else {
+            return descriptiveSlideList.size();
+        }
     }
 
     @Override
     public boolean isViewFromObject(@NonNull View view, @NonNull Object object) {
-        return view == ((ViewGroup) object);
+        return view == object;
     }
 
     @NonNull
     @Override
     public Object instantiateItem(@NonNull ViewGroup container, int position) {
-        ViewGroup slideLayout = (ViewGroup) slideList.get(position);
+        ViewGroup slideLayout;
+        if (slideList != null) {
+            slideLayout = slideList.get(position);
+        } else {
+            slideLayout = descriptiveSlideList.get(position).getSlide();
+        }
         container.addView(slideLayout);
         return slideLayout;
     }

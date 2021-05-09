@@ -14,8 +14,8 @@
         android:id="@+id/pb_layout_loader"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:indeterminateTint="@android:color/black"
-        android:layout_centerInParent="true" />
+        android:layout_centerInParent="true"
+        android:indeterminateTint="@android:color/black" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -33,8 +33,8 @@
             android:paddingRight="20dp"
             android:paddingBottom="10dp"
             android:textColor="@android:color/white"
-            tools:textSize="16sp"
-            tools:text="1 / 5" />
+            tools:text="1 / 5"
+            tools:textSize="16sp" />
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/slide_indicator"
@@ -42,9 +42,26 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            app:tabPaddingStart="3dp"
+            app:tabIndicatorHeight="0dp"
             app:tabPaddingEnd="3dp"
-            app:tabIndicatorHeight="0dp" />
+            app:tabPaddingStart="3dp" />
+
+        <TextView
+            android:id="@+id/tv_sub_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/slide_indicator"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="25dp"
+            android:background="@drawable/shape_sub_title_background"
+            android:paddingLeft="30dp"
+            android:paddingTop="10dp"
+            android:paddingRight="30dp"
+            android:paddingBottom="10dp"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:visibility="gone"
+            tools:text="Hello World!" />
 
     </RelativeLayout>
 
