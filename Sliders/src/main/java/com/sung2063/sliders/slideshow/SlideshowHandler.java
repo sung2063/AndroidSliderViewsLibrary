@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import com.sung2063.sliders.R;
 import com.sung2063.sliders.exceptions.IllegalArgumentException;
 import com.sung2063.sliders.exceptions.SlideOutOfBoundException;
+import com.sung2063.sliders.model.DescriptiveSlideModel;
 
 import java.util.List;
 
@@ -24,6 +25,7 @@ public class SlideshowHandler {
     // =============================================================================================
     private Context context;
     private List<ViewGroup> slideList;
+    private List<DescriptiveSlideModel> descriptiveSlideList;
     private boolean isShowingIndicator;
     private float indicatorScale;
     private Drawable indicatorSelectedIcon;
@@ -31,6 +33,7 @@ public class SlideshowHandler {
     private boolean isShowingSlideNumber;
     private int slideNumberTextSize;        // in px
     private int delayTimePeriod;
+    private boolean isShowingSubTitle;
 
     // =============================================================================================
     // Constructors
@@ -39,7 +42,7 @@ public class SlideshowHandler {
         // Default Constructor
     }
 
-    public SlideshowHandler(Context context, boolean isShowingIndicator, float indicatorScale, Drawable indicatorSelectedIcon, Drawable indicatorUnselectedIcon, boolean isShowingSlideNumber, int slideNumberTextSize, int delayTimePeriod) {
+    public SlideshowHandler(Context context, boolean isShowingIndicator, float indicatorScale, Drawable indicatorSelectedIcon, Drawable indicatorUnselectedIcon, boolean isShowingSlideNumber, int slideNumberTextSize, int delayTimePeriod, boolean isShowingSubTitle) {
         this.context = context;
         this.isShowingIndicator = isShowingIndicator;
         this.indicatorScale = indicatorScale;
@@ -48,6 +51,7 @@ public class SlideshowHandler {
         this.isShowingSlideNumber = isShowingSlideNumber;
         this.slideNumberTextSize = slideNumberTextSize;
         this.delayTimePeriod = delayTimePeriod;
+        this.isShowingSubTitle = isShowingSubTitle;
     }
 
     // =============================================================================================
@@ -64,6 +68,15 @@ public class SlideshowHandler {
     }
 
     /**
+     * Returns the list of descriptive slide
+     *
+     * @return the list of descriptive slide
+     */
+    public List<DescriptiveSlideModel> getDescriptiveSlideList() {
+        return descriptiveSlideList;
+    }
+
+    /**
      * Set slide list
      *
      * @param slideList List of ViewGroup slide which user created
@@ -74,6 +87,19 @@ public class SlideshowHandler {
             throw new SlideOutOfBoundException(context.getString(R.string.exceed_slide_boundary_error));
         }
         this.slideList = slideList;
+    }
+
+    /**
+     * Set descriptive slide list
+     *
+     * @param descriptiveSlideList List of descriptive slide which user created
+     * @throws SlideOutOfBoundException on list size is greater than 10
+     */
+    public void setDescriptiveSlideList(List<DescriptiveSlideModel> descriptiveSlideList) throws SlideOutOfBoundException {
+        if (descriptiveSlideList.size() > 10) {
+            throw new SlideOutOfBoundException(context.getString(R.string.exceed_slide_boundary_error));
+        }
+        this.descriptiveSlideList = descriptiveSlideList;
     }
 
     /**
@@ -204,5 +230,23 @@ public class SlideshowHandler {
      */
     public void setSlideNumberTextSize(int slideNumberTextSize) {
         this.slideNumberTextSize = slideNumberTextSize;
+    }
+
+    /**
+     * Get subtitle showing value
+     *
+     * @return boolean value for subTitle visibility
+     */
+    public boolean isShowingSubTitle() {
+        return isShowingSubTitle;
+    }
+
+    /**
+     * Set subtitle visibility
+     *
+     * @param isShowingSubTitle boolean value if subtitle should be shown
+     */
+    public void setShowingSubTitle(boolean isShowingSubTitle) {
+        this.isShowingSubTitle = isShowingSubTitle;
     }
 }

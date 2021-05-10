@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.sung2063.sliders.adapter.SlideAdapter;
 import com.sung2063.sliders.exceptions.IllegalArgumentException;
 import com.sung2063.sliders.exceptions.SlideNullPointerException;
 import com.sung2063.sliders.exceptions.SlideOutOfBoundException;
+import com.sung2063.sliders.model.DescriptiveSlideModel;
 import com.sung2063.sliders.util.UnitConverter;
 
 import java.util.List;
@@ -41,7 +43,7 @@ public class SlideshowView extends LinearLayout {
     private Context context;
     private ViewPager vpSlider;
     private TabLayout tabIndicator;
-    private TextView tvPageNum;
+    private TextView tvPageNum, tvSubTitle;
     private SlideshowHandler slideshowHandler;
 
     // =============================================================================================
@@ -69,6 +71,7 @@ public class SlideshowView extends LinearLayout {
             boolean isShowingSlideNumber = typedArray.getBoolean(R.styleable.SlideshowView_showSlideNumber, false);
             int slideNumberTextSize = typedArray.getInt(R.styleable.SlideshowView_slideNumberTextSize, 45);
             int delayTimePeriod = typedArray.getInt(R.styleable.SlideshowView_delayTimePeriod, 5);
+            boolean isShowingSubTitle = typedArray.getBoolean(R.styleable.CarouselView_showSubTitle, false);
 
             // Default value check
             if (indicatorSelectedIcon == null) {
@@ -92,7 +95,7 @@ public class SlideshowView extends LinearLayout {
                 throw new IllegalArgumentException(context.getString(R.string.slide_delay_time_illegal_error));
             }
 
-            slideshowHandler = new SlideshowHandler(context, isShowingIndicator, indicatorScale, indicatorSelectedIcon, indicatorUnselectedIcon, isShowingSlideNumber, slideNumberTextSize, delayTimePeriod);
+            slideshowHandler = new SlideshowHandler(context, isShowingIndicator, indicatorScale, indicatorSelectedIcon, indicatorUnselectedIcon, isShowingSlideNumber, slideNumberTextSize, delayTimePeriod, isShowingSubTitle);
 
         } finally {
             typedArray.recycle();
@@ -116,9 +119,10 @@ public class SlideshowView extends LinearLayout {
         // Setup Layout
         LayoutInflater inflater = LayoutInflater.from(context);
         RelativeLayout rootLayout = (RelativeLayout) inflater.inflate(R.layout.slideshow_layout, null);
-        vpSlider = (ViewPager) rootLayout.findViewById(R.id.vp_slider);
-        tabIndicator = (TabLayout) rootLayout.findViewById(R.id.slide_indicator);
-        tvPageNum = (TextView) rootLayout.findViewById(R.id.tv_slide_num);
+        vpSlider = rootLayout.findViewById(R.id.vp_slider);
+        tabIndicator = rootLayout.findViewById(R.id.slide_indicator);
+        tvPageNum = rootLayout.findViewById(R.id.tv_slide_num);
+        tvSubTitle = rootLayout.findViewById(R.id.tv_sub_title);
 
         setupIndicator(slideshowHandler.isShowingIndicator(), slideshowHandler.getIndicatorScale());
         setupSlideNumber(slideshowHandler.showSlideNumber(), slideshowHandler.getSlideNumberTextSize());
@@ -130,7 +134,12 @@ public class SlideshowView extends LinearLayout {
      * Update page number TextView
      */
     private void setPageNumber(int position) {
-        tvPageNum.setText(position + " / " + slideshowHandler.getSlideList().size());
+        List<ViewGroup> slideList = slideshowHandler.getSlideList();
+        if (slideList != null) {
+            tvPageNum.setText(position + " / " + slideList.size());
+        } else {
+            tvPageNum.setText(position + " / " + slideshowHandler.getDescriptiveSlideList().size());
+        }
     }
 
     /**
@@ -148,10 +157,12 @@ public class SlideshowView extends LinearLayout {
             tabIndicator.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
+                    int currentPosition = tab.getPosition();
                     for (int i = 0; i < tabIndicator.getTabCount(); i++) {
                         tabIndicator.getTabAt(i).setIcon(slideshowHandler.getIndicatorUnselectedIcon());
                     }
-                    tabIndicator.getTabAt(tab.getPosition()).setIcon(slideshowHandler.getIndicatorSelectedIcon());
+                    tabIndicator.getTabAt(currentPosition).setIcon(slideshowHandler.getIndicatorSelectedIcon());
+                    subTitleOperation(currentPosition);
                 }
 
                 @Override
@@ -190,13 +201,35 @@ public class SlideshowView extends LinearLayout {
                 public void onPageSelected(int index) {
                     super.onPageSelected(index);
                     int position = index + 1;
-                    tvPageNum.setText(position + " / " + slideshowHandler.getSlideList().size());
+
+                    List<ViewGroup> slideList = slideshowHandler.getSlideList();
+                    if (slideList != null) {
+                        tvPageNum.setText(position + " / " + slideList.size());
+                    } else {
+                        tvPageNum.setText(position + " / " + slideshowHandler.getDescriptiveSlideList().size());
+                    }
                 }
             });
         } else {
             tvPageNum.setVisibility(GONE);              // Does not use the slide number
         }
 
+    }
+
+    /**
+     * Operate subtitle visibility
+     *
+     * @param position current tab position
+     */
+    public void subTitleOperation(int position) {
+        List<DescriptiveSlideModel> descriptiveSlideList = slideshowHandler.getDescriptiveSlideList();
+        if (descriptiveSlideList != null && slideshowHandler.isShowingSubTitle()
+                && (descriptiveSlideList.get(position).getSubTitle() != null && !TextUtils.isEmpty(descriptiveSlideList.get(position).getSubTitle()))) {
+            tvSubTitle.setText(descriptiveSlideList.get(position).getSubTitle());
+            tvSubTitle.setVisibility(VISIBLE);
+        } else {
+            tvSubTitle.setVisibility(GONE);
+        }
     }
 
     // =============================================================================================
@@ -213,7 +246,18 @@ public class SlideshowView extends LinearLayout {
 
             ((Activity) context).runOnUiThread(() -> {
                 int slideIndex;
-                if (vpSlider.getCurrentItem() < slideshowHandler.getSlideList().size() - 1) {
+
+                List<ViewGroup> slideList = slideshowHandler.getSlideList();
+                List<DescriptiveSlideModel> descriptiveSlideList = slideshowHandler.getDescriptiveSlideList();
+
+                int sliderSize;
+                if (slideList != null) {
+                    sliderSize = slideList.size();
+                } else {
+                    sliderSize = descriptiveSlideList.size();
+                }
+
+                if (vpSlider.getCurrentItem() < sliderSize - 1) {
                     slideIndex = vpSlider.getCurrentItem() + 1;
                 } else {
                     slideIndex = 0;
@@ -233,26 +277,26 @@ public class SlideshowView extends LinearLayout {
     public void launch() throws SlideNullPointerException {
 
         List<ViewGroup> slideList = slideshowHandler.getSlideList();
-        if (slideList != null) {
+        List<DescriptiveSlideModel> descriptiveSlideList = slideshowHandler.getDescriptiveSlideList();
 
-            SlideAdapter slideAdapter = new SlideAdapter(slideList);
-            vpSlider.setAdapter(slideAdapter);
-
-            if (slideshowHandler.isShowingIndicator()) {
-                tabIndicator.setupWithViewPager(vpSlider, true);        // Setup indicator only when it is on
-            }
-
-            if (slideshowHandler.showSlideNumber()) {
-                setPageNumber(1);       // Update only when slide is enabled
-            }
-
-            long periodTime = slideshowHandler.getDelayTimePeriod() * 1000;
-            Timer sliderTimer = new Timer();
-            sliderTimer.scheduleAtFixedRate(new SlideshowTimer(), 4000, periodTime);
-
-        } else {
+        if (slideList == null && descriptiveSlideList == null) {
             throw new SlideNullPointerException(context.getString(R.string.list_null_error));      // Null Exception
         }
+
+        SlideAdapter slideAdapter = new SlideAdapter(slideList, descriptiveSlideList);
+        vpSlider.setAdapter(slideAdapter);
+
+        if (slideshowHandler.isShowingIndicator()) {
+            tabIndicator.setupWithViewPager(vpSlider, true);        // Setup indicator only when it is on
+        }
+
+        if (slideshowHandler.showSlideNumber()) {
+            setPageNumber(1);       // Update only when slide is enabled
+        }
+
+        long periodTime = slideshowHandler.getDelayTimePeriod() * 1000;
+        Timer sliderTimer = new Timer();
+        sliderTimer.scheduleAtFixedRate(new SlideshowTimer(), 4000, periodTime);
 
     }
 
@@ -271,6 +315,16 @@ public class SlideshowView extends LinearLayout {
      */
     public void setSlideList(List<ViewGroup> slideList) throws SlideOutOfBoundException {
         slideshowHandler.setSlideList(slideList);
+    }
+
+    /**
+     * Set descriptive slide list
+     *
+     * @param slideList List of ViewGroup slide & subTitle which user created
+     * @throws SlideOutOfBoundException on list size is greater than 10
+     */
+    public void setDescriptiveSlideList(List<DescriptiveSlideModel> slideList) throws SlideOutOfBoundException {
+        slideshowHandler.setDescriptiveSlideList(slideList);
     }
 
     /**
@@ -342,5 +396,11 @@ public class SlideshowView extends LinearLayout {
         slideshowHandler.setSlideNumberTextSize(slideNumberTextSize);
     }
 
+    /**
+     * Set subtitle visibility
+     */
+    public void showSubTitle(boolean isShowingSubTitle) {
+        slideshowHandler.setShowingSubTitle(isShowingSubTitle);
+    }
 }
 

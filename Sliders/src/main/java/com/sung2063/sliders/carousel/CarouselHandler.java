@@ -6,15 +6,16 @@ import android.view.ViewGroup;
 
 import com.sung2063.sliders.R;
 import com.sung2063.sliders.exceptions.SlideOutOfBoundException;
+import com.sung2063.sliders.model.DescriptiveSlideModel;
 
 import java.util.List;
 
 /**
  * The CarouselHandler class helps stores the data of CarouselView.
  *
- * @author  Sung Hyun Back
+ * @author Sung Hyun Back
  * @version 1.0
- * @since   2020-07-02
+ * @since 2020-07-02
  */
 public class CarouselHandler {
 
@@ -23,6 +24,7 @@ public class CarouselHandler {
     // =============================================================================================
     private Context context;
     private List<ViewGroup> slideList;
+    private List<DescriptiveSlideModel> descriptiveSlideList;
     private int scrollDirection;
     private boolean isShowingIndicator;
     private float indicatorScale;
@@ -30,6 +32,7 @@ public class CarouselHandler {
     private Drawable indicatorUnselectedIcon;
     private boolean isShowingSlideNumber;
     private int slideNumberTextSize;            // in px
+    private boolean isShowingSubTitle;
 
     // =============================================================================================
     // Fields
@@ -51,7 +54,7 @@ public class CarouselHandler {
         // Default Constructor
     }
 
-    public CarouselHandler(Context context, int scrollDirection, boolean isShowingIndicator, float indicatorScale, Drawable indicatorSelectedIcon, Drawable indicatorUnselectedIcon, boolean isShowingSlideNumber, int slideNumberTextSize) {
+    public CarouselHandler(Context context, int scrollDirection, boolean isShowingIndicator, float indicatorScale, Drawable indicatorSelectedIcon, Drawable indicatorUnselectedIcon, boolean isShowingSlideNumber, int slideNumberTextSize, boolean isShowingSubTitle) {
         this.context = context;
         this.scrollDirection = scrollDirection;
         this.isShowingIndicator = isShowingIndicator;
@@ -60,6 +63,7 @@ public class CarouselHandler {
         this.indicatorUnselectedIcon = indicatorUnselectedIcon;
         this.isShowingSlideNumber = isShowingSlideNumber;
         this.slideNumberTextSize = slideNumberTextSize;
+        this.isShowingSubTitle = isShowingSubTitle;
     }
 
     // =============================================================================================
@@ -68,6 +72,7 @@ public class CarouselHandler {
 
     /**
      * Returns the list of ViewGroup slide
+     *
      * @return the list of ViewGroup
      */
     public List<ViewGroup> getSlideList() {
@@ -75,7 +80,17 @@ public class CarouselHandler {
     }
 
     /**
+     * Returns the list of descriptive slide
+     *
+     * @return the list of descriptive slide
+     */
+    public List<DescriptiveSlideModel> getDescriptiveSlideList() {
+        return descriptiveSlideList;
+    }
+
+    /**
      * Set slide list
+     *
      * @param slideList List of ViewGroup slide which user created
      * @throws SlideOutOfBoundException on list size is greater than 10
      */
@@ -87,7 +102,21 @@ public class CarouselHandler {
     }
 
     /**
+     * Set descriptive slide list
+     *
+     * @param descriptiveSlideList List of descriptive slide which user created
+     * @throws SlideOutOfBoundException on list size is greater than 10
+     */
+    public void setDescriptiveSlideList(List<DescriptiveSlideModel> descriptiveSlideList) throws SlideOutOfBoundException {
+        if (descriptiveSlideList.size() > 10) {
+            throw new SlideOutOfBoundException(context.getString(R.string.exceed_slide_boundary_error));
+        }
+        this.descriptiveSlideList = descriptiveSlideList;
+    }
+
+    /**
      * Returns the scroll direction
+     *
      * @return 0 for horizontal direction or 1 for vertical direction
      */
     public int getScrollDirection() {
@@ -96,6 +125,7 @@ public class CarouselHandler {
 
     /**
      * Set scroll direction
+     *
      * @param scrollDirection scroll direction either horizontal or vertical in integer
      */
     public void setScrollDirection(int scrollDirection) {
@@ -104,6 +134,7 @@ public class CarouselHandler {
 
     /**
      * Returns the value of showing tab indicator
+     *
      * @return true if showing the tab indicator, otherwise false
      */
     protected boolean isShowingIndicator() {
@@ -112,6 +143,7 @@ public class CarouselHandler {
 
     /**
      * Set the value of tab indicator
+     *
      * @param isShowingIndicator boolean value for showing the tab indicator
      */
     protected void showIndicator(boolean isShowingIndicator) {
@@ -120,6 +152,7 @@ public class CarouselHandler {
 
     /**
      * Returns the value of indicator scale
+     *
      * @return indicatorScale returns indicator scale value
      */
     protected float getIndicatorScale() {
@@ -128,6 +161,7 @@ public class CarouselHandler {
 
     /**
      * Set the value of indicator scale
+     *
      * @param indicatorScale float value for indicator scale
      */
     protected void setIndicatorScale(float indicatorScale) {
@@ -136,6 +170,7 @@ public class CarouselHandler {
 
     /**
      * Returns the drawable id of indicator selected icon
+     *
      * @return indicatorSelectedIcon returns indicator selected icon drawable id
      */
     protected Drawable getIndicatorSelectedIcon() {
@@ -144,6 +179,7 @@ public class CarouselHandler {
 
     /**
      * Set the drawable id of indicator selected icon
+     *
      * @param indicatorSelectedIcon drawable id of indicator selected icon
      */
     protected void setIndicatorSelectedIcon(Drawable indicatorSelectedIcon) {
@@ -152,6 +188,7 @@ public class CarouselHandler {
 
     /**
      * Returns the drawable id of indicator unselected icon
+     *
      * @return indicatorUnselectedIcon returns indicator unselected icon drawable id
      */
     protected Drawable getIndicatorUnselectedIcon() {
@@ -160,6 +197,7 @@ public class CarouselHandler {
 
     /**
      * Set the drawable id of indicator unselected icon
+     *
      * @param indicatorUnselectedIcon drawable id of indicator unselected icon
      */
     protected void setIndicatorUnselectedIcon(Drawable indicatorUnselectedIcon) {
@@ -168,6 +206,7 @@ public class CarouselHandler {
 
     /**
      * Returns the value of showing slide number
+     *
      * @return true if showing the slide number, otherwise false
      */
     public boolean isShowingSlideNumber() {
@@ -176,6 +215,7 @@ public class CarouselHandler {
 
     /**
      * Set the value of slide number
+     *
      * @param isShowingSlideNumber boolean value for showing the slide number
      */
     public void showSlideNumber(boolean isShowingSlideNumber) {
@@ -184,6 +224,7 @@ public class CarouselHandler {
 
     /**
      * Get the value of slide number text size in px
+     *
      * @return slide number text size in px
      */
     public int getSlideNumberTextSize() {
@@ -192,10 +233,28 @@ public class CarouselHandler {
 
     /**
      * Set the value of slide number text size in px
+     *
      * @param slideNumberTextSize int value for slide number text size in px
      */
     public void setSlideNumberTextSize(int slideNumberTextSize) {
         this.slideNumberTextSize = slideNumberTextSize;
     }
 
+    /**
+     * Get subtitle showing value
+     *
+     * @return boolean value for subTitle visibility
+     */
+    public boolean isShowingSubTitle() {
+        return isShowingSubTitle;
+    }
+
+    /**
+     * Set subtitle to be shown or not
+     *
+     * @param isShowingSubTitle boolean value if subtitle should be shown
+     */
+    public void setShowingSubTitle(boolean isShowingSubTitle) {
+        this.isShowingSubTitle = isShowingSubTitle;
+    }
 }

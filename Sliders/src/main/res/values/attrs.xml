@@ -8,6 +8,7 @@
     <attr name="indicatorUnselectedIcon" format="integer" />
     <attr name="showSlideNumber" format="boolean"/>
     <attr name="slideNumberTextSize" format="integer" />
+    <attr name="showSubTitle" format="boolean" />
 
     <!-- XML attributes for Carousel View -->
     <declare-styleable name="CarouselView">
@@ -21,6 +22,7 @@
         <attr name="indicatorUnselectedIcon" />
         <attr name="showSlideNumber" />
         <attr name="slideNumberTextSize" />
+        <attr name="showSubTitle" />
     </declare-styleable>
 
     <!-- XML attributes for Slideshow View -->
@@ -32,6 +34,7 @@
         <attr name="showSlideNumber" />
         <attr name="slideNumberTextSize" />
         <attr name="delayTimePeriod" format="integer" />
+        <attr name="showSubTitle" />
     </declare-styleable>
 
 </resources>
