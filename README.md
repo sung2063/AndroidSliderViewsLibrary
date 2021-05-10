@@ -6,6 +6,7 @@ Android Slider Views library supports <b>Carousels</b> and <b>Slideshow</b> View
 
 [![](https://jitpack.io/v/sung2063/AndroidSliderViewsLibrary.svg)](https://jitpack.io/#sung2063/AndroidSliderViewsLibrary)
 
+
 ## 🎬 Sample GIF Images
 
 <center>
@@ -249,9 +250,10 @@ Here are available attributions you can use to modify your slider views.
  
  Sung Hyun Back (@sung2063)
 
- ## 💖 Sponsorship
+ ## 💖 Sponsor
  
- Please sponsor me to my GitHub sponsorship page at https://github.com/sponsors/sung2063.
+ Sponsor me at GitHub Sponsor page at https://github.com/sponsors/sung2063.
+ 
  Your valueable sponsorship helps me contributing more innovative projects and libraries. ❤️
  
  ## 📝 License
