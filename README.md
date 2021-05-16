@@ -34,6 +34,8 @@ Android Slider Views library updates regularly. Your valueable sponsorship helps
 Updated on <i>May 10th 2021</i>
 - <b>NEW</b>: You now can add sub-title to slide! ✨
 
+Updated on <i>May 16th 2021</i>
+- Improve codes from v1.6.1
 
 ## 📖 How To Use Slider Views
 
@@ -169,7 +171,7 @@ Here are available attributions you can use to modify your slider views.
     <tr>
       <td>indicatorScale</td>
       <td>float</td>
-      <td>Used for resize the indicator scale from 0 - 1.5.</td>
+      <td>Used for resize the indicator scale from 0.5 - 1.5.</td>
     </tr>
     <tr>
       <td>indicatorSelectedIcon</td>
@@ -216,7 +218,7 @@ Here are available attributions you can use to modify your slider views.
     <tr>
       <td>indicatorScale</td>
       <td>float</td>
-      <td>Used for resize the indicator scale from 0 - 1.5.</td>
+      <td>Used for resize the indicator scale from 0.5 - 1.5.</td>
     </tr>
     <tr>
       <td>indicatorSelectedIcon</td>
