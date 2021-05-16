@@ -1,4 +1,4 @@
-package com.sung2063.sliders.exceptions;
+package com.sung2063.sliders.exception;
 
 /**
  * The IllegalArgumentException is for handling wrong argument which input by user.

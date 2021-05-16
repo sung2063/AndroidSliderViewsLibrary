@@ -19,9 +19,9 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.sung2063.sliders.R;
 import com.sung2063.sliders.adapter.SlideAdapter;
-import com.sung2063.sliders.exceptions.IllegalArgumentException;
-import com.sung2063.sliders.exceptions.SlideNullPointerException;
-import com.sung2063.sliders.exceptions.SlideOutOfBoundException;
+import com.sung2063.sliders.exception.IllegalArgumentException;
+import com.sung2063.sliders.exception.SlideNullPointerException;
+import com.sung2063.sliders.exception.SlideOutOfBoundException;
 import com.sung2063.sliders.model.DescriptiveSlideModel;
 import com.sung2063.sliders.util.UnitConverter;
 
@@ -88,11 +88,11 @@ public class CarouselView extends LinearLayout {
             }
 
             // Check illegal exception
-            if (indicatorScale < 0 || indicatorScale > 1.5) {
+            if (indicatorScale < 0.5 || indicatorScale > 1.5) {
                 throw new IllegalArgumentException(context.getString(R.string.indicator_scale_illegal_error));
             }
 
-            if (slideNumberTextSize < 0 || slideNumberTextSize > 50) {
+            if (slideNumberTextSize < 20 || slideNumberTextSize > 50) {
                 throw new IllegalArgumentException(context.getString(R.string.slide_number_text_size_illegal_error));
             }
 

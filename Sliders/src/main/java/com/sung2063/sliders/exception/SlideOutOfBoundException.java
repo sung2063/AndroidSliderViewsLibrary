@@ -1,4 +1,4 @@
-package com.sung2063.sliders.exceptions;
+package com.sung2063.sliders.exception;
 
 /**
  * The SlideOutOfBoundException is for handling num of slide does not meet the condition.
