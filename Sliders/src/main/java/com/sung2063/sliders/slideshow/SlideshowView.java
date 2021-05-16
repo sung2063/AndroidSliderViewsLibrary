@@ -18,9 +18,9 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.sung2063.sliders.R;
 import com.sung2063.sliders.adapter.SlideAdapter;
-import com.sung2063.sliders.exceptions.IllegalArgumentException;
-import com.sung2063.sliders.exceptions.SlideNullPointerException;
-import com.sung2063.sliders.exceptions.SlideOutOfBoundException;
+import com.sung2063.sliders.exception.IllegalArgumentException;
+import com.sung2063.sliders.exception.SlideNullPointerException;
+import com.sung2063.sliders.exception.SlideOutOfBoundException;
 import com.sung2063.sliders.model.DescriptiveSlideModel;
 import com.sung2063.sliders.util.UnitConverter;
 
@@ -44,6 +44,8 @@ public class SlideshowView extends LinearLayout {
     private ViewPager vpSlider;
     private TabLayout tabIndicator;
     private TextView tvPageNum, tvSubTitle;
+
+    // Data Objects
     private SlideshowHandler slideshowHandler;
 
     // =============================================================================================
@@ -66,12 +68,12 @@ public class SlideshowView extends LinearLayout {
         try {
             boolean isShowingIndicator = typedArray.getBoolean(R.styleable.SlideshowView_showIndicator, false);
             float indicatorScale = typedArray.getFloat(R.styleable.SlideshowView_indicatorScale, 1);
-            Drawable indicatorSelectedIcon = typedArray.getDrawable(R.styleable.CarouselView_indicatorSelectedIcon);
-            Drawable indicatorUnselectedIcon = typedArray.getDrawable(R.styleable.CarouselView_indicatorUnselectedIcon);
+            Drawable indicatorSelectedIcon = typedArray.getDrawable(R.styleable.SlideshowView_indicatorSelectedIcon);
+            Drawable indicatorUnselectedIcon = typedArray.getDrawable(R.styleable.SlideshowView_indicatorUnselectedIcon);
             boolean isShowingSlideNumber = typedArray.getBoolean(R.styleable.SlideshowView_showSlideNumber, false);
             int slideNumberTextSize = typedArray.getInt(R.styleable.SlideshowView_slideNumberTextSize, 45);
             int delayTimePeriod = typedArray.getInt(R.styleable.SlideshowView_delayTimePeriod, 5);
-            boolean isShowingSubTitle = typedArray.getBoolean(R.styleable.CarouselView_showSubTitle, false);
+            boolean isShowingSubTitle = typedArray.getBoolean(R.styleable.SlideshowView_showSubTitle, false);
 
             // Default value check
             if (indicatorSelectedIcon == null) {
@@ -83,11 +85,11 @@ public class SlideshowView extends LinearLayout {
             }
 
             // Check illegal exception
-            if (indicatorScale < 0 || indicatorScale > 1.5) {
+            if (indicatorScale < 0.5 || indicatorScale > 1.5) {
                 throw new IllegalArgumentException(context.getString(R.string.indicator_scale_illegal_error));
             }
 
-            if (slideNumberTextSize < 0 || slideNumberTextSize > 50) {
+            if (slideNumberTextSize < 20 || slideNumberTextSize > 50) {
                 throw new IllegalArgumentException(context.getString(R.string.slide_number_text_size_illegal_error));
             }
 
