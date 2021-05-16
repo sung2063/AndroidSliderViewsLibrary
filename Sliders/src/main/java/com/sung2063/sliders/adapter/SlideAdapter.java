@@ -13,9 +13,9 @@ import java.util.List;
 /**
  * The SlideAdapter class helps to connect with ViewPager.
  *
- * @author  Sung Hyun Back
+ * @author Sung Hyun Back
  * @version 1.0
- * @since   2020-07-02
+ * @since 2020-07-02
  */
 public class SlideAdapter extends PagerAdapter {
 

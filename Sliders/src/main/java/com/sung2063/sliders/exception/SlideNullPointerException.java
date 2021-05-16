@@ -1,4 +1,4 @@
-package com.sung2063.sliders.exceptions;
+package com.sung2063.sliders.exception;
 
 /**
  * The SlideNullPointerException is for handling null slide list.

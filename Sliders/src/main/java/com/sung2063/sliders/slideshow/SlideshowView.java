@@ -18,9 +18,9 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.sung2063.sliders.R;
 import com.sung2063.sliders.adapter.SlideAdapter;
-import com.sung2063.sliders.exceptions.IllegalArgumentException;
-import com.sung2063.sliders.exceptions.SlideNullPointerException;
-import com.sung2063.sliders.exceptions.SlideOutOfBoundException;
+import com.sung2063.sliders.exception.IllegalArgumentException;
+import com.sung2063.sliders.exception.SlideNullPointerException;
+import com.sung2063.sliders.exception.SlideOutOfBoundException;
 import com.sung2063.sliders.model.DescriptiveSlideModel;
 import com.sung2063.sliders.util.UnitConverter;
 
@@ -31,9 +31,9 @@ import java.util.TimerTask;
 /**
  * The SlideshowView is the view which user can create the slideshow with custom layouts.
  *
- * @author  Sung Hyun Back
+ * @author Sung Hyun Back
  * @version 1.0
- * @since   2020-07-02
+ * @since 2020-07-02
  */
 public class SlideshowView extends LinearLayout {
 
@@ -44,6 +44,8 @@ public class SlideshowView extends LinearLayout {
     private ViewPager vpSlider;
     private TabLayout tabIndicator;
     private TextView tvPageNum, tvSubTitle;
+
+    // Data Objects
     private SlideshowHandler slideshowHandler;
 
     // =============================================================================================
@@ -66,12 +68,12 @@ public class SlideshowView extends LinearLayout {
         try {
             boolean isShowingIndicator = typedArray.getBoolean(R.styleable.SlideshowView_showIndicator, false);
             float indicatorScale = typedArray.getFloat(R.styleable.SlideshowView_indicatorScale, 1);
-            Drawable indicatorSelectedIcon = typedArray.getDrawable(R.styleable.CarouselView_indicatorSelectedIcon);
-            Drawable indicatorUnselectedIcon = typedArray.getDrawable(R.styleable.CarouselView_indicatorUnselectedIcon);
+            Drawable indicatorSelectedIcon = typedArray.getDrawable(R.styleable.SlideshowView_indicatorSelectedIcon);
+            Drawable indicatorUnselectedIcon = typedArray.getDrawable(R.styleable.SlideshowView_indicatorUnselectedIcon);
             boolean isShowingSlideNumber = typedArray.getBoolean(R.styleable.SlideshowView_showSlideNumber, false);
             int slideNumberTextSize = typedArray.getInt(R.styleable.SlideshowView_slideNumberTextSize, 45);
             int delayTimePeriod = typedArray.getInt(R.styleable.SlideshowView_delayTimePeriod, 5);
-            boolean isShowingSubTitle = typedArray.getBoolean(R.styleable.CarouselView_showSubTitle, false);
+            boolean isShowingSubTitle = typedArray.getBoolean(R.styleable.SlideshowView_showSubTitle, false);
 
             // Default value check
             if (indicatorSelectedIcon == null) {
@@ -83,11 +85,11 @@ public class SlideshowView extends LinearLayout {
             }
 
             // Check illegal exception
-            if (indicatorScale < 0 || indicatorScale > 1.5) {
+            if (indicatorScale < 0.5 || indicatorScale > 1.5) {
                 throw new IllegalArgumentException(context.getString(R.string.indicator_scale_illegal_error));
             }
 
-            if (slideNumberTextSize < 0 || slideNumberTextSize > 50) {
+            if (slideNumberTextSize < 20 || slideNumberTextSize > 50) {
                 throw new IllegalArgumentException(context.getString(R.string.slide_number_text_size_illegal_error));
             }
 
@@ -144,8 +146,9 @@ public class SlideshowView extends LinearLayout {
 
     /**
      * Setup the tab indicator
+     *
      * @param isShowingIndicator boolean value for showing the tab indicator
-     * @param indicatorScale float value for indicator scale
+     * @param indicatorScale     float value for indicator scale
      */
     private void setupIndicator(boolean isShowingIndicator, float indicatorScale) {
         if (isShowingIndicator) {
@@ -183,8 +186,9 @@ public class SlideshowView extends LinearLayout {
 
     /**
      * Setup the slide number view
+     *
      * @param isShowingSlideNumber boolean value for showing the slide number
-     * @param slideNumberTextSize text size of slide number
+     * @param slideNumberTextSize  text size of slide number
      */
     protected void setupSlideNumber(boolean isShowingSlideNumber, int slideNumberTextSize) {
 
@@ -302,6 +306,7 @@ public class SlideshowView extends LinearLayout {
 
     /**
      * Returns the list of ViewGroup slide
+     *
      * @return the list of ViewGroup
      */
     public List<ViewGroup> getSlideList() {
@@ -310,6 +315,7 @@ public class SlideshowView extends LinearLayout {
 
     /**
      * Set slide list
+     *
      * @param slideList List of ViewGroup slide which user created
      * @throws SlideOutOfBoundException on list size is greater than 10
      */
@@ -329,6 +335,7 @@ public class SlideshowView extends LinearLayout {
 
     /**
      * Returns the value of showing tab indicator
+     *
      * @return true if showing the tab indicator, otherwise false
      */
     public boolean isShowingIndicator() {
@@ -337,6 +344,7 @@ public class SlideshowView extends LinearLayout {
 
     /**
      * Set the value of tab indicator
+     *
      * @param isShowingIndicator boolean value for showing the tab indicator
      */
     public void showIndicator(boolean isShowingIndicator) {
@@ -346,6 +354,7 @@ public class SlideshowView extends LinearLayout {
 
     /**
      * Set indicator scale
+     *
      * @param indicatorScale float value for indicator scale
      */
     public void setIndicatorScale(int indicatorScale) {
@@ -355,6 +364,7 @@ public class SlideshowView extends LinearLayout {
 
     /**
      * Returns the value of slide delay time period
+     *
      * @return slide delay time in second
      */
     public long getDelayTimePeriod() {
@@ -363,8 +373,9 @@ public class SlideshowView extends LinearLayout {
 
     /**
      * Set the value of slide delay time period
+     *
      * @param delayTimePeriod slide delay time in second
-     * @exception IllegalArgumentException on delay time is set less than 0 or greater than 10
+     * @throws IllegalArgumentException on delay time is set less than 0 or greater than 10
      */
     public void setDelayTimePeriod(int delayTimePeriod) throws IllegalArgumentException {
         slideshowHandler.setDelayTimePeriod(delayTimePeriod);
@@ -372,6 +383,7 @@ public class SlideshowView extends LinearLayout {
 
     /**
      * Returns the value of showing slide number
+     *
      * @return true if showing the slide number, otherwise false
      */
     public boolean isShowingSlideNumber() {
@@ -380,6 +392,7 @@ public class SlideshowView extends LinearLayout {
 
     /**
      * Set the value of slide number
+     *
      * @param isShowingSlideNumber boolean value for showing the slide number
      */
     public void showSlideNumber(boolean isShowingSlideNumber) {
@@ -389,6 +402,7 @@ public class SlideshowView extends LinearLayout {
 
     /**
      * Set the slide number text size
+     *
      * @param slideNumberTextSize int value for slide number text size
      */
     public void setSlideNumberTextSize(int slideNumberTextSize) {

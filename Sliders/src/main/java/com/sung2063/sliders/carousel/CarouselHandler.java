@@ -5,7 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.view.ViewGroup;
 
 import com.sung2063.sliders.R;
-import com.sung2063.sliders.exceptions.SlideOutOfBoundException;
+import com.sung2063.sliders.exception.SlideOutOfBoundException;
 import com.sung2063.sliders.model.DescriptiveSlideModel;
 
 import java.util.List;
