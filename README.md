@@ -8,9 +8,11 @@ Android Slider Views library supports <b>Carousels</b> and <b>Slideshow</b> View
 
 ## 💖 Sponsor
 
-Android Slider Views library updates regularly. Your valuable sponsorship helps me contributing more features and maintaining the library. Click heart button below to sponsor me!
+Android Slider Views library updates regularly. Your valuable sponsorship helps me contributing more features and maintaining the library. Sponsor me at the GitHub sponsoring page by clicking heart button or at the Paypal!
 
 [![Github Sponsorship](marketing/sponsor_iconx64.png)](https://github.com/sponsors/sung2063)
+
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate?business=sunghyunb1991%40gmail.com&item_name=GitHub+Open+Source+Project+Sponsorship&currency_code=USD)
 
 ## 🎬 Sample GIF Images
 
