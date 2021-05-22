@@ -22,6 +22,7 @@ import com.sung2063.sliders.adapter.SlideAdapter;
 import com.sung2063.sliders.exception.IllegalArgumentException;
 import com.sung2063.sliders.exception.SlideNullPointerException;
 import com.sung2063.sliders.exception.SlideOutOfBoundException;
+import com.sung2063.sliders.listener.SliderListener;
 import com.sung2063.sliders.model.DescriptiveSlideModel;
 import com.sung2063.sliders.util.UnitConverter;
 
@@ -34,7 +35,7 @@ import java.util.List;
  * @version 1.0
  * @since 2020-07-02
  */
-public class CarouselView extends LinearLayout {
+public class CarouselView extends LinearLayout implements SlideAdapter.EventListener {
 
     // =============================================================================================
     // Variables
@@ -49,6 +50,7 @@ public class CarouselView extends LinearLayout {
     // Data Objects
     private final int VERTICAL_LEFT_MARGIN_SPACE = 100;
     private CarouselHandler carouselHandler;
+    private SliderListener sliderListener;
 
     // =============================================================================================
     // Constructors
@@ -278,7 +280,7 @@ public class CarouselView extends LinearLayout {
         }
 
         // Connect slideAdapter to ViewPager and indicator
-        SlideAdapter slideAdapter = new SlideAdapter(slideList, descriptiveSlideList);
+        SlideAdapter slideAdapter = new SlideAdapter(slideList, descriptiveSlideList, this);
         vpSlider.setAdapter(slideAdapter);
         tabIndicator.setupWithViewPager(vpSlider, true);
         setPageNumber(1);           // Initial Page
@@ -289,6 +291,15 @@ public class CarouselView extends LinearLayout {
             repositioningVerticalTab();
             pbLayoutLoader.setVisibility(GONE);
         }, 250);
+    }
+
+    /**
+     * Set slider listener
+     *
+     * @param sliderListener Call back interface for slider action
+     */
+    public void setSliderListener(SliderListener sliderListener) {
+        this.sliderListener = sliderListener;
     }
 
     /**
@@ -404,4 +415,10 @@ public class CarouselView extends LinearLayout {
         carouselHandler.setShowingSubTitle(isShowingSubTitle);
     }
 
+    @Override
+    public void onSlideClicked(int position) {
+        if (sliderListener != null) {
+            sliderListener.onSliderClicked(position);
+        }
+    }
 }

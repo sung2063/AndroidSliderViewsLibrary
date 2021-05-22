@@ -1,5 +1,6 @@
 package com.sung2063.sliders.adapter;
 
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -24,16 +25,18 @@ public class SlideAdapter extends PagerAdapter {
     // =============================================================================================
     private List<ViewGroup> slideList;
     private List<DescriptiveSlideModel> descriptiveSlideList;
+    private EventListener listener;
 
     // =============================================================================================
     // Constructors
     // =============================================================================================
-    public SlideAdapter(List<ViewGroup> slideList, List<DescriptiveSlideModel> descriptiveSlideList) {
+    public SlideAdapter(List<ViewGroup> slideList, List<DescriptiveSlideModel> descriptiveSlideList, EventListener listener) {
         if (slideList != null) {
             this.slideList = slideList;
         } else {
             this.descriptiveSlideList = descriptiveSlideList;
         }
+        this.listener = listener;
     }
 
     // =============================================================================================
@@ -62,6 +65,9 @@ public class SlideAdapter extends PagerAdapter {
         } else {
             slideLayout = descriptiveSlideList.get(position).getSlide();
         }
+
+        slideLayout.setOnClickListener(view -> listener.onSlideClicked(position));
+
         container.addView(slideLayout);
         return slideLayout;
     }
@@ -69,5 +75,9 @@ public class SlideAdapter extends PagerAdapter {
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         container.removeView((ViewGroup) object);
+    }
+
+    public interface EventListener {
+        void onSlideClicked(int position);
     }
 }

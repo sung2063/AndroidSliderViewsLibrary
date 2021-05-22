@@ -21,6 +21,7 @@ import com.sung2063.sliders.adapter.SlideAdapter;
 import com.sung2063.sliders.exception.IllegalArgumentException;
 import com.sung2063.sliders.exception.SlideNullPointerException;
 import com.sung2063.sliders.exception.SlideOutOfBoundException;
+import com.sung2063.sliders.listener.SliderListener;
 import com.sung2063.sliders.model.DescriptiveSlideModel;
 import com.sung2063.sliders.util.UnitConverter;
 
@@ -35,7 +36,7 @@ import java.util.TimerTask;
  * @version 1.0
  * @since 2020-07-02
  */
-public class SlideshowView extends LinearLayout {
+public class SlideshowView extends LinearLayout implements SlideAdapter.EventListener {
 
     // =============================================================================================
     // Variables
@@ -47,6 +48,7 @@ public class SlideshowView extends LinearLayout {
 
     // Data Objects
     private SlideshowHandler slideshowHandler;
+    private SliderListener sliderListener;
 
     // =============================================================================================
     // Constructors
@@ -287,7 +289,7 @@ public class SlideshowView extends LinearLayout {
             throw new SlideNullPointerException(context.getString(R.string.list_null_error));      // Null Exception
         }
 
-        SlideAdapter slideAdapter = new SlideAdapter(slideList, descriptiveSlideList);
+        SlideAdapter slideAdapter = new SlideAdapter(slideList, descriptiveSlideList, this);
         vpSlider.setAdapter(slideAdapter);
 
         if (slideshowHandler.isShowingIndicator()) {
@@ -302,6 +304,15 @@ public class SlideshowView extends LinearLayout {
         Timer sliderTimer = new Timer();
         sliderTimer.scheduleAtFixedRate(new SlideshowTimer(), 4000, periodTime);
 
+    }
+
+    /**
+     * Set slider listener
+     *
+     * @param sliderListener Call back interface for slider action
+     */
+    public void setSliderListener(SliderListener sliderListener) {
+        this.sliderListener = sliderListener;
     }
 
     /**
@@ -415,6 +426,13 @@ public class SlideshowView extends LinearLayout {
      */
     public void showSubTitle(boolean isShowingSubTitle) {
         slideshowHandler.setShowingSubTitle(isShowingSubTitle);
+    }
+
+    @Override
+    public void onSlideClicked(int position) {
+        if (sliderListener != null) {
+            sliderListener.onSliderClicked(position);
+        }
     }
 }
 
