@@ -40,15 +40,28 @@ Android Slider Views library updates regularly. Your valuable sponsorship helps 
     </tr>
    </table>
  </center>
+ 
+## 📋 Table of Contents
+1. [Latest Update](#update)
+2. [Usage Instruction](#instruction)
+    1. [Setup Project](#setup_project)
+    2. [CarouselView](#carousel_view)
+    3. [SlideshowView](#slideshow_view)
+3. [Callback Events](#callback_events)
+4. [Attributions](#attributions)
+    1. [CarouselView](#attr_carousel_view)
+    2. [SlideshowView](#attr_slideshow_view)
+5. [Contributor](#contributor)
+6. [License](#license)
 
-## 🆕 Latest Update
+## 🆕 Latest Update <a name="update" />
 
 Updated on <i>May 22nd 2021</i>
 - <b>NEW</b>: Slider callback action is now available! ✨
 
-## 📖 How To Use Slider Views
+## 📖 How To Use Slider Views <a name="instruction" />
 
-<b>1. Setup your Android project setting</b>
+<b>1. Setup your Android project setting</b> <a name="setup_project" />
 
 Minimum SDK Version: 21 or greater (Update in your <i>app level</i> `build.gradle`)<br/>
 Supported Programming Language: Java
@@ -85,7 +98,7 @@ Now you are ready to use SliderView Library. You can start creating CarouselView
 
 <hr/>
 
-### <i>CarouselView</i>
+### <i>CarouselView</i> <a name="carousel_view" />
 
 CarouselView can be used for your application intro and show multiple images or videos in one layout with scrolling. CarouselView by Sliders library supports both horizontal and vertical scrolls.
 
@@ -120,7 +133,7 @@ Your CarouselView is now displayed on your app! 👏<br/>
 
 <hr/>
 
-### <i>SlideshowView</i>
+### <i>SlideshowView</i> <a name="slideshow_view" />
 
 SlideshowView can be used to show the multiple layouts by certain period of time. You can set how much time you want to show each layout to the user.
 
@@ -154,9 +167,9 @@ Your SlideshowView is now displayed on your app! 👏<br/>
 
 <hr/>
 
-### Add Callback Action
+### Callback Events <a name="callback_events" />
 
-You can also get callback from slider when it is clicked. On your Activity, create a SliderListener object with implementing own action and pass this object to the view by calling `setSliderListener`. Here is the snippet code how to implement the callback: 
+You can also get callback events from slider. On your Activity, create a SliderListener object with implementing own action and pass this object to the view by calling `setSliderListener`. Here is the snippet code how to implement the callback: 
 
 ```java
 // Create a callback interface
@@ -173,11 +186,11 @@ Check out my <a href="https://github.com/sung2063/AndroidSliderViewSample">Andro
 
 <br/>
 
-## 🎨 Attributions
+## 🎨 Attributions <a name="attributions" />
 
 Here are available attributions you can use to modify your slider views.
 
-### CarouselView
+### CarouselView <a name="attr_carousel_view" />
 
 <center>
   <table>
@@ -233,7 +246,7 @@ Here are available attributions you can use to modify your slider views.
    </table>
  </center>
 
-### SlideshowView
+### SlideshowView <a name="attr_slideshow_view" />
 
 <center>
   <table>
@@ -285,10 +298,10 @@ Here are available attributions you can use to modify your slider views.
    </table>
  </center>
 
- ## 🌟 Contributor
+ ## 🌟 Contributor <a name="contributor" />
  
  Sung Hyun Back (@sung2063)
  
- ## 📝 License
+ ## 📝 License <a name="license" />
  
  The code is licensed under the <a href="https://github.com/sung2063/AndroidSliderViewsLibrary/blob/master/LICENSE">GNU General Public License</a>.
