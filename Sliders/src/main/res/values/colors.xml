@@ -3,5 +3,6 @@
 
     <color name="defaultTransparentColor">#66000000</color>
     <color name="defaultSubTitleColor">#AA000000</color>
+    <color name="slideArrowColor">#999999</color>
 
 </resources>

@@ -34,6 +34,7 @@ public class SlideshowHandler {
     private int slideNumberTextSize;        // in px
     private int delayTimePeriod;
     private boolean isShowingSubTitle;
+    private boolean isShowingSlideButtons;
 
     // =============================================================================================
     // Constructors
@@ -42,7 +43,7 @@ public class SlideshowHandler {
         // Default Constructor
     }
 
-    public SlideshowHandler(Context context, boolean isShowingIndicator, float indicatorScale, Drawable indicatorSelectedIcon, Drawable indicatorUnselectedIcon, boolean isShowingSlideNumber, int slideNumberTextSize, int delayTimePeriod, boolean isShowingSubTitle) {
+    public SlideshowHandler(Context context, boolean isShowingIndicator, float indicatorScale, Drawable indicatorSelectedIcon, Drawable indicatorUnselectedIcon, boolean isShowingSlideNumber, int slideNumberTextSize, int delayTimePeriod, boolean isShowingSubTitle, boolean isShowingSlideButtons) {
         this.context = context;
         this.isShowingIndicator = isShowingIndicator;
         this.indicatorScale = indicatorScale;
@@ -52,6 +53,7 @@ public class SlideshowHandler {
         this.slideNumberTextSize = slideNumberTextSize;
         this.delayTimePeriod = delayTimePeriod;
         this.isShowingSubTitle = isShowingSubTitle;
+        this.isShowingSlideButtons = isShowingSlideButtons;
     }
 
     // =============================================================================================
@@ -248,5 +250,23 @@ public class SlideshowHandler {
      */
     public void setShowingSubTitle(boolean isShowingSubTitle) {
         this.isShowingSubTitle = isShowingSubTitle;
+    }
+
+    /**
+     * Get showing slide buttons value
+     *
+     * @return boolean value for slide buttons visibility
+     */
+    public boolean isShowingSlideButtons() {
+        return isShowingSlideButtons;
+    }
+
+    /**
+     * Set slide buttons to be shown or not
+     *
+     * @param isShowingSlideButtons boolean value if slide buttons should be shown
+     */
+    public void setShowingSlideButtons(boolean isShowingSlideButtons) {
+        this.isShowingSlideButtons = isShowingSlideButtons;
     }
 }

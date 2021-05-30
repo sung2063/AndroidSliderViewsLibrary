@@ -21,13 +21,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/iv_slide_left_arrow"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:rotation="90"
+            android:src="@drawable/ic_left_arrow"
+            android:tint="@color/slideArrowColor" />
+
+        <ImageView
+            android:id="@+id/iv_slide_right_arrow"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="25dp"
+            android:rotation="90"
+            android:src="@drawable/ic_right_arrow"
+            android:tint="@color/slideArrowColor" />
+
         <TextView
             android:id="@+id/tv_slide_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="50dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="25dp"
             android:background="@drawable/slide_num_background"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
