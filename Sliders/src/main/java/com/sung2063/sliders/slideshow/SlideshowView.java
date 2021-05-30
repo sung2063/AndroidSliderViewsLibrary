@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -45,6 +46,7 @@ public class SlideshowView extends LinearLayout implements SlideAdapter.EventLis
     private ViewPager vpSlider;
     private TabLayout tabIndicator;
     private TextView tvPageNum, tvSubTitle;
+    private ImageView ivSlideLeft, ivSlideRight;
 
     // Data Objects
     private SlideshowHandler slideshowHandler;
@@ -76,6 +78,7 @@ public class SlideshowView extends LinearLayout implements SlideAdapter.EventLis
             int slideNumberTextSize = typedArray.getInt(R.styleable.SlideshowView_slideNumberTextSize, 45);
             int delayTimePeriod = typedArray.getInt(R.styleable.SlideshowView_delayTimePeriod, 5);
             boolean isShowingSubTitle = typedArray.getBoolean(R.styleable.SlideshowView_showSubTitle, false);
+            boolean isShowingSlideButtons = typedArray.getBoolean(R.styleable.SlideshowView_showSlideButtons, true);
 
             // Default value check
             if (indicatorSelectedIcon == null) {
@@ -99,7 +102,7 @@ public class SlideshowView extends LinearLayout implements SlideAdapter.EventLis
                 throw new IllegalArgumentException(context.getString(R.string.slide_delay_time_illegal_error));
             }
 
-            slideshowHandler = new SlideshowHandler(context, isShowingIndicator, indicatorScale, indicatorSelectedIcon, indicatorUnselectedIcon, isShowingSlideNumber, slideNumberTextSize, delayTimePeriod, isShowingSubTitle);
+            slideshowHandler = new SlideshowHandler(context, isShowingIndicator, indicatorScale, indicatorSelectedIcon, indicatorUnselectedIcon, isShowingSlideNumber, slideNumberTextSize, delayTimePeriod, isShowingSubTitle, isShowingSlideButtons);
 
         } finally {
             typedArray.recycle();
@@ -127,9 +130,12 @@ public class SlideshowView extends LinearLayout implements SlideAdapter.EventLis
         tabIndicator = rootLayout.findViewById(R.id.slide_indicator);
         tvPageNum = rootLayout.findViewById(R.id.tv_slide_num);
         tvSubTitle = rootLayout.findViewById(R.id.tv_sub_title);
+        ivSlideLeft = rootLayout.findViewById(R.id.iv_slide_left_arrow);
+        ivSlideRight = rootLayout.findViewById(R.id.iv_slide_right_arrow);
 
         setupIndicator(slideshowHandler.isShowingIndicator(), slideshowHandler.getIndicatorScale());
         setupSlideNumber(slideshowHandler.showSlideNumber(), slideshowHandler.getSlideNumberTextSize());
+        setupSlideButtons(slideshowHandler.isShowingSlideButtons());
         addView(rootLayout);        // Add layout to the root layout
 
     }
@@ -208,16 +214,86 @@ public class SlideshowView extends LinearLayout implements SlideAdapter.EventLis
                     super.onPageSelected(index);
                     int position = index + 1;
 
-                    List<ViewGroup> slideList = slideshowHandler.getSlideList();
-                    if (slideList != null) {
-                        tvPageNum.setText(position + " / " + slideList.size());
-                    } else {
-                        tvPageNum.setText(position + " / " + slideshowHandler.getDescriptiveSlideList().size());
+                    int maxNumSlider = 0;
+                    if (slideshowHandler.getSlideList() != null) {
+                        maxNumSlider = slideshowHandler.getSlideList().size();
+                    } else if (slideshowHandler.getDescriptiveSlideList() != null) {
+                        maxNumSlider = slideshowHandler.getDescriptiveSlideList().size();
                     }
+                    tvPageNum.setText(position + " / " + maxNumSlider);
+                    decideSliderButtonsVisibility(index, maxNumSlider);       // Update Slider Buttons Visibility
                 }
             });
         } else {
             tvPageNum.setVisibility(GONE);              // Does not use the slide number
+        }
+
+    }
+
+    /**
+     * Setup the slide buttons
+     *
+     * @param isShowingSlideButtons boolean value for showing the slide buttons
+     */
+    private void setupSlideButtons(boolean isShowingSlideButtons) {
+
+        if (isShowingSlideButtons) {
+            // Show the slide buttons
+            ivSlideLeft.setVisibility(GONE);        // Hide on very first slide
+            ivSlideRight.setVisibility(VISIBLE);
+
+            ivSlideRight.setOnClickListener(view -> {
+                int currentPosition = vpSlider.getCurrentItem();
+                if (currentPosition >= 0) {
+                    vpSlider.setCurrentItem(currentPosition + 1, true);
+                }
+            });
+
+            ivSlideLeft.setOnClickListener(view -> {
+                int maxSlider = 0;
+                if (slideshowHandler.getSlideList() != null) {
+                    maxSlider = slideshowHandler.getSlideList().size();
+                } else if (slideshowHandler.getDescriptiveSlideList() != null) {
+                    maxSlider = slideshowHandler.getDescriptiveSlideList().size();
+                }
+
+                int currentPosition = vpSlider.getCurrentItem();
+                if (currentPosition <= maxSlider - 1) {
+                    vpSlider.setCurrentItem(currentPosition - 1, true);
+                }
+            });
+
+        } else {
+            // Does not use the slide buttons
+            ivSlideLeft.setVisibility(GONE);
+            ivSlideRight.setVisibility(GONE);
+        }
+
+    }
+
+    /**
+     * Decide slider buttons visibility depend on slider index
+     *
+     * @param position current slider position
+     * @param maxNumSlider max number of slider
+     */
+    private void decideSliderButtonsVisibility(int position, int maxNumSlider) {
+
+        if (slideshowHandler.isShowingSlideButtons()) {
+            if (position == 0) {
+                ivSlideLeft.setVisibility(GONE);
+                ivSlideRight.setVisibility(VISIBLE);
+            } else if (position == maxNumSlider - 1) {
+                ivSlideLeft.setVisibility(VISIBLE);
+                ivSlideRight.setVisibility(GONE);
+            } else {
+                ivSlideLeft.setVisibility(VISIBLE);
+                ivSlideRight.setVisibility(VISIBLE);
+            }
+        } else {
+            // Does not use the slide buttons
+            ivSlideLeft.setVisibility(GONE);
+            ivSlideRight.setVisibility(GONE);
         }
 
     }
@@ -426,6 +502,14 @@ public class SlideshowView extends LinearLayout implements SlideAdapter.EventLis
      */
     public void showSubTitle(boolean isShowingSubTitle) {
         slideshowHandler.setShowingSubTitle(isShowingSubTitle);
+    }
+
+    /**
+     * Set slide buttons visibility
+     */
+    public void showSlideButtons(boolean isShowingSlideButtons) {
+        setupSlideButtons(isShowingSlideButtons);
+        slideshowHandler.setShowingSlideButtons(isShowingSlideButtons);
     }
 
     @Override

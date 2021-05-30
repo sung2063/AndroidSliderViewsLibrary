@@ -9,6 +9,7 @@
     <attr name="showSlideNumber" format="boolean"/>
     <attr name="slideNumberTextSize" format="integer" />
     <attr name="showSubTitle" format="boolean" />
+    <attr name="showSlideButtons" format="boolean" />
 
     <!-- XML attributes for Carousel View -->
     <declare-styleable name="CarouselView">
@@ -23,6 +24,7 @@
         <attr name="showSlideNumber" />
         <attr name="slideNumberTextSize" />
         <attr name="showSubTitle" />
+        <attr name="showSlideButtons" />
     </declare-styleable>
 
     <!-- XML attributes for Slideshow View -->
@@ -35,6 +37,7 @@
         <attr name="slideNumberTextSize" />
         <attr name="delayTimePeriod" format="integer" />
         <attr name="showSubTitle" />
+        <attr name="showSlideButtons" />
     </declare-styleable>
 
 </resources>

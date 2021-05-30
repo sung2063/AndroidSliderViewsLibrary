@@ -13,7 +13,27 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="25dp">
+        android:paddingTop="25dp"
+        android:paddingBottom="25dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <ImageView
+            android:id="@+id/iv_slide_left_arrow"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_left_arrow"
+            android:tint="@color/slideArrowColor" />
+
+        <ImageView
+            android:id="@+id/iv_slide_right_arrow"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_right_arrow"
+            android:tint="@color/slideArrowColor" />
 
         <TextView
             android:id="@+id/tv_slide_num"
