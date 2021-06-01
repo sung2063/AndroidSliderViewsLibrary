@@ -56,8 +56,8 @@ Android Slider Views library updates regularly. Your valuable sponsorship helps 
 
 ## 🆕 Latest Update <a name="update" />
 
-Updated on <i>May 22nd 2021</i>
-- <b>NEW</b>: Slider callback action is now available! ✨
+Updated on <i>May 31st 2021</i>
+- <b>NEW</b>: Implemented slide buttons. ✨
 
 ## 📖 How To Use Slider Views <a name="instruction" />
 
