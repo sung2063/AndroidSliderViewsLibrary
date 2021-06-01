@@ -90,7 +90,7 @@ allprojects {
 
 Next, add the SliderViews and required libraries in <i>app level</i> `build.gradle` and sync the gradle file. 
 ```gradle
-implementation 'com.github.sung2063:AndroidSliderViewsLibrary:1.7'
+implementation 'com.github.sung2063:AndroidSliderViewsLibrary:1.8'
 implementation 'com.google.android.material:material:1.1.0'
 ```
 
@@ -184,8 +184,6 @@ slideshowView.setSliderListener(sliderListener)   // If you are using Slideshow
 
 Check out my <a href="https://github.com/sung2063/AndroidSliderViewSample">Android Slide Sample App</a> project for more example on using SliderView library.
 
-<br/>
-
 ## 🎨 Attributions <a name="attributions" />
 
 Here are available attributions you can use to modify your slider views.
@@ -243,6 +241,11 @@ Here are available attributions you can use to modify your slider views.
       <td>boolean</td>
       <td>Show the sub-title if the value is true, otherwise do not show.</td>
     </tr>
+    <tr>
+      <td>showSlideButtons</td>
+      <td>boolean</td>
+      <td>Show the slide buttons if the value is true, otherwise do not show. Default is true.</td>
+    </tr>
    </table>
  </center>
 
@@ -294,6 +297,11 @@ Here are available attributions you can use to modify your slider views.
       <td>showSubTitle</td>
       <td>boolean</td>
       <td>Show the sub-title if the value is true, otherwise do not show.</td>
+    </tr>
+    <tr>
+      <td>showSlideButtons</td>
+      <td>boolean</td>
+      <td>Show the slide buttons if the value is true, otherwise do not show. Default is true.</td>
     </tr>
    </table>
  </center>
